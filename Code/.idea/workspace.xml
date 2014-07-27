@@ -67,7 +67,7 @@
       <file leaf-file-name="DBUtils.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DBUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="0" selection-start="246" selection-end="246" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1905">
+            <state line="16" column="0" selection-start="0" selection-end="333" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1905">
               <folding />
             </state>
           </provider>
@@ -85,11 +85,18 @@
       <file leaf-file-name="ActorMethods.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ActorMethods.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="134" column="33" selection-start="3892" selection-end="3904" vertical-scroll-proportion="0.0" vertical-offset="1425" max-vertical-offset="3060">
+            <state line="129" column="0" selection-start="3812" selection-end="3812" vertical-scroll-proportion="0.0" vertical-offset="1620" max-vertical-offset="3420">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HTMLUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HTMLUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="0" selection-start="582" selection-end="582" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
               <folding>
-                <marker date="1406078088000" expanded="true" signature="1421:1795" placeholder="{...}" />
-                <marker date="1406078088000" expanded="true" signature="3233:3811" placeholder="{...}" />
-                <marker date="1406078088000" expanded="true" signature="3907:4467" placeholder="{...}" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -98,7 +105,7 @@
       <file leaf-file-name="ActorServlet.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ActorServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="1" selection-start="2699" selection-end="2699" vertical-scroll-proportion="1.4727273" vertical-offset="0" max-vertical-offset="1305">
+            <state line="43" column="0" selection-start="1342" selection-end="1342" vertical-scroll-proportion="0.4" vertical-offset="315" max-vertical-offset="1140">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -129,9 +136,10 @@
         <option value="$PROJECT_DIR$/RegistrarServlet.java" />
         <option value="$PROJECT_DIR$/DBUtils.java" />
         <option value="$PROJECT_DIR$/ActorViewServlet.java" />
-        <option value="$PROJECT_DIR$/ActorMethods.java" />
         <option value="$PROJECT_DIR$/ActorEditServlet.java" />
+        <option value="$PROJECT_DIR$/ActorMethods.java" />
         <option value="$PROJECT_DIR$/ActorServlet.java" />
+        <option value="$PROJECT_DIR$/HTMLUtils.java" />
       </list>
     </option>
   </component>
@@ -347,7 +355,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -365,7 +373,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14444445" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14444445" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -409,24 +417,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DBUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="246" selection-end="246" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1905">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ActorMethods.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="134" column="33" selection-start="3892" selection-end="3904" vertical-scroll-proportion="0.0" vertical-offset="1425" max-vertical-offset="3060">
-          <folding>
-            <marker date="1406078088000" expanded="true" signature="1421:1795" placeholder="{...}" />
-            <marker date="1406078088000" expanded="true" signature="3233:3811" placeholder="{...}" />
-            <marker date="1406078088000" expanded="true" signature="3907:4467" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Actor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="72" column="5" selection-start="1617" selection-end="1617" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1185">
@@ -434,9 +424,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ActorMethods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="129" column="0" selection-start="3812" selection-end="3812" vertical-scroll-proportion="0.0" vertical-offset="1620" max-vertical-offset="3420">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DBUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="0" selection-end="333" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1905">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HTMLUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="582" selection-end="582" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ActorServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="1" selection-start="2699" selection-end="2699" vertical-scroll-proportion="1.4727273" vertical-offset="0" max-vertical-offset="1305">
+        <state line="43" column="0" selection-start="1342" selection-end="1342" vertical-scroll-proportion="0.4" vertical-offset="315" max-vertical-offset="1140">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

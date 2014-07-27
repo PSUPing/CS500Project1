@@ -132,6 +132,30 @@ public class ActorMethods {
      * Get all the actors.
      * @return
      */
+    public ArrayList getSQLTopActors() {
+        ArrayList actors = new ArrayList();
+
+        try {
+            String query = "SELECT TOP 25 name, dob, bio FROM actors;";
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            while (rs.next())
+                actors.add(new Actor(result.getString("name"), result.getDate("dob"), result.getString("bio")));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+
+        return actors;
+    }
+
+    /**
+     * Get all the actors.
+     * @return
+     */
     public ArrayList getAllActors() {
         ArrayList actors = new ArrayList();
 

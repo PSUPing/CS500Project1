@@ -16,19 +16,17 @@ import java.util.ResourceBundle;
 public class ActorServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private ActorMethods actMethods;
-    private Registrar reg;
+//    private ActorMethods actMethods;
     private ResourceBundle bundle;
     private String message;
 
     public void init() throws ServletException {
         bundle = ResourceBundle.getBundle("OraBundle");
-        reg = new Registrar();
-        message = reg.openDBConnection(bundle.getString("dbUser"), bundle.getString("dbPass"), bundle.getString("dbSID"),
-                bundle.getString("dbHost"), Integer.parseInt(bundle.getString("dbPort")));
+//        message = reg.openDBConnection(bundle.getString("dbUser"), bundle.getString("dbPass"), bundle.getString("dbSID"),
+//                bundle.getString("dbHost"), Integer.parseInt(bundle.getString("dbPort")));
     }
 
-    public void displayActors(PrintWriter out, boolean viewOnly) {
+/*    public void displayActors(PrintWriter out, boolean viewOnly) {
         out.println("<h1>Student roster</h1>");
         out.println("<table>");
 
@@ -42,33 +40,24 @@ public class ActorServlet extends HttpServlet {
             else
                 out.println(actor.toEditHTML());
         }
-    }
+    }*/
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         response.setContentType("text/html");
 
         PrintWriter out = response.getWriter();
-        out.println("<html><head></head><body>");
+        out.println(HTMLUtils.renderHeader("Actor", "", false));
 
-        if (!message.equalsIgnoreCase("servus")) {
+/*        if (!message.equalsIgnoreCase("servus")) {
             out.println("<h1>Oracle connection failed " + message + "</h1>");
-        } else {
-            String mode = request.getParameter("editMode");
-
-            if (mode == null)
-                displayActors(out, true);
-            else
-                displayActors(out, false);
-        }
+        }*/
 
         // TODO: This will be the format for moving between pages and for changing from View to Edit
-        out.println("<a href=\"ActorServlet?name=${name}&dob=${dob}&editMode=true\">Edit Mode</a>");
+/*        out.println("<a href=\"ActorServlet?name=${name}&dob=${dob}&editMode=true\">Edit Mode</a>");
         out.println("<a href=\"ActorServlet?name=${name}&dob=${dob}\">View Mode</a>");
-        out.println("<a href=\"MovieServlet?name=${name}&year=${year}\">Movie Page</a>");
+        out.println("<a href=\"MovieServlet?name=${name}&year=${year}\">Movie Page</a>");*/
 
-        out.println("</table>");
-        out.println("</html>");
+        out.println(HTMLUtils.renderClosingTags());
     }
 
     public void doPost(HttpServletRequest inRequest, HttpServletResponse outResponse) throws ServletException, IOException {
@@ -77,6 +66,6 @@ public class ActorServlet extends HttpServlet {
     }
 
     public void destroy() {
-        reg.closeDBConnection();
+//        reg.closeDBConnection();
     }
 }
