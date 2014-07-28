@@ -9,7 +9,7 @@ import java.sql.Statement;
  *
  * An implementation of some basic database utilities.
  *
- * @author Julia Stoyanovich (stoyanovich@drexel.edu)
+ * @author Matt Ping & Matt Bucci
  *
  */
 public class HTMLUtils {

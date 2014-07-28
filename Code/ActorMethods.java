@@ -75,7 +75,7 @@ public class ActorMethods {
 
         try {
             int cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM actors WHERE name = '" + changedActor.getName() +
-                "' AND '" + changedActor.getDOB() + "';";
+                "' AND '" + changedActor.getDOB() + "';");
 
             if (cnt == 0)
                 return actor;
@@ -84,14 +84,14 @@ public class ActorMethods {
                     "' AND '" + changedActor.getDOB() + "';";
             DBUtils.executeUpdate(conn, query);
 
-            query "SELECT name, dob, bio FROM actors WHERE name = '" + changedActor.getName() +
+            query = "SELECT name, dob, bio FROM actors WHERE name = '" + changedActor.getName() +
                     "' AND '" + changedActor.getDOB() + "';";
 
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             result.next();
-            actor = new Actor(changedActor.getName(), changedActor.getDOB(), rs.getString("bio"));
+            actor = new Actor(changedActor.getName(), changedActor.getDOB(), result.getString("bio"));
 
             result.close();
             stmt.close();
@@ -129,7 +129,7 @@ public class ActorMethods {
     }
 
     /**
-     * Get all the actors.
+     * Get all the actors
      * @return
      */
     public ArrayList getSQLTopActors() {
@@ -140,7 +140,7 @@ public class ActorMethods {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
-            while (rs.next())
+            while (result.next())
                 actors.add(new Actor(result.getString("name"), result.getDate("dob"), result.getString("bio")));
 
             result.close();
@@ -164,7 +164,7 @@ public class ActorMethods {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
-            while (rs.next())
+            while (result.next())
                 actors.add(new Actor(result.getString("name"), result.getDate("dob"), result.getString("bio")));
 
             result.close();

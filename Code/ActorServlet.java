@@ -43,11 +43,34 @@ public class ActorServlet extends HttpServlet {
     }*/
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String aid = "";
+        String uid = "";
+        boolean editMode = false;
+
+        // Get possible variables for the Actor Servlet
+        String queryString = request.getQueryString();
+        String[] qString = queryString.split("&");
+
+        for (int i = 0; i < qString.length; i++) {
+            String[] tempString = qString[i].split("=");
+
+            if (tempString[0].equals("aid"))
+                aid = tempString[1];
+            else if (tempString[0].equals("uid"))
+                uid = tempString[1];
+            else if (tempString[0].equals("editMode"))
+                editMode = Boolean.valueOf(tempString[1]).booleanValue();
+        }
+
         response.setContentType("text/html");
-
         PrintWriter out = response.getWriter();
-        out.println(HTMLUtils.renderHeader("Actor", "", false));
 
+        out.println(HTMLUtils.renderHeader("Actor", "", editMode));
+        out.println("<h2>Actor search: </h2><input type=\"text\" />");
+
+        if (!editMode) {
+
+        }
 /*        if (!message.equalsIgnoreCase("servus")) {
             out.println("<h1>Oracle connection failed " + message + "</h1>");
         }*/
@@ -61,7 +84,6 @@ public class ActorServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest inRequest, HttpServletResponse outResponse) throws ServletException, IOException {
-
         doGet(inRequest, outResponse);
     }
 

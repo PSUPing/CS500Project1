@@ -52,10 +52,6 @@ public class Actor {
         actorBio = bio;
     }
 
-    public String getName() {
-        return _name;
-    }
-
     /********** Output Methods **********/
 
     public String toString() {
