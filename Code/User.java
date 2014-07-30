@@ -21,7 +21,7 @@ public class User {
     public User(String uid, String pwd, java.sql.Date dob, java.sql.Date joined) {
         userID = uid;
         userPwd = pwd;
-        userDob = dob;
+        userDOB = dob;
         userJoined = joined;
     }
 
@@ -36,7 +36,7 @@ public class User {
     }
 
     public java.sql.Date getDOB() {
-        return userDob;
+        return userDOB;
     }
 
     public java.sql.Date getDateJoined() {
@@ -54,7 +54,7 @@ public class User {
     }
 
     public void setDOB(java.sql.Date dob) {
-        userDob = dob;
+        userDOB = dob;
     }
 
     public void setBio(java.sql.Date joined) {
@@ -64,17 +64,17 @@ public class User {
     /********** Output Methods **********/
 
     public String toString() {
-        return "(UID: " + userID + ") Password: " + userPwd + " DOB: " + userDob + " Date Joined: " + userJoined;
+        return "(UID: " + userID + ") Password: " + userPwd + " DOB: " + userDOB + " Date Joined: " + userJoined;
     }
 
     public String toViewHTML() {
-        return "<tr><td>" + userID + "</td><td>" + userPwd + "</td><td>" + userDob + "</td><td>" + userJoined + "</td><td></tr>";
+        return "<tr><td>" + userID + "</td><td>" + userPwd + "</td><td>" + userDOB + "</td><td>" + userJoined + "</td><td></tr>";
     }
 
     public String toEditHTML() {
         return "<tr><td><input type=\"text\" name=\"uID\" />" + userID +
                "</td><td><input type=\"password\" name=\"uPwd\" />" + userPwd +
-               "</td><td><input type=\"text\" name=\"uDob\" />" + userDob +
+               "</td><td><input type=\"text\" name=\"uDob\" />" + userDOB +
                "</td><td><input type=\"text\" name=\"uJoined\" />" + userJoined + "</td><td></tr>";
     }
 }
