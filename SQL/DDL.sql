@@ -44,10 +44,10 @@ create table Ratings(
 create table Reviews(
 	RevID number primary key,
 	rating number,
-	MID number,
+	TID number,
 	rs varchar(512), --review source
 	rt varchar(1024), --review text
-	foreign key (MID) references Titles(MID)
+	foreign key (TID) references Titles(TID)
 );
 
 create table Quotes(
