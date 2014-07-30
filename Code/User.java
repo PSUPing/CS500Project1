@@ -12,6 +12,8 @@ public class User {
     private java.sql.Date userDOB;
     private java.sql.Date userJoined;
 
+    private java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); // Used for outputting the date
+
     /********** Constructors **********/
 
     public User(String uid) {
@@ -64,17 +66,24 @@ public class User {
     /********** Output Methods **********/
 
     public String toString() {
-        return "(UID: " + userID + ") Password: " + userPwd + " DOB: " + userDOB + " Date Joined: " + userJoined;
+        return "(UID: " + userID + 
+                ") Password: " + userPwd + 
+                " DOB: " + df.format(userDOB) + 
+                " Date Joined: " + df.format(userJoined);
     }
 
     public String toViewHTML() {
-        return "<tr><td>" + userID + "</td><td>" + userPwd + "</td><td>" + userDOB + "</td><td>" + userJoined + "</td><td></tr>";
+        return "<tr><td>" + userID + 
+                "</td><td>" + userPwd + 
+                "</td><td>" + df.format(userDOB) + 
+                "</td><td>" + df.format(userJoined) + 
+                "</td><td></tr>";
     }
 
     public String toEditHTML() {
         return "<tr><td><input type=\"text\" name=\"uID\" />" + userID +
                "</td><td><input type=\"password\" name=\"uPwd\" />" + userPwd +
-               "</td><td><input type=\"text\" name=\"uDob\" />" + userDOB +
-               "</td><td><input type=\"text\" name=\"uJoined\" />" + userJoined + "</td><td></tr>";
+               "</td><td><input type=\"text\" name=\"uDob\" />" + df.format(userDOB) +
+               "</td><td><input type=\"text\" name=\"uJoined\" />" + df.format(userJoined) + "</td><td></tr>";
     }
 }
