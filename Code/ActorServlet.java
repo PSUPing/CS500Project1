@@ -89,10 +89,10 @@ public class ActorServlet extends HttpServlet {
     }
 
     private void renderActorTextBoxes(PrintWriter out, Actor actorToUpdate) {
-        if (actor != null) {
-            out.println("<div>Name: <input type=\"text\" name=\"name\""> + actor.getName() + "</input></div>");
-            out.println("<div>Date of Birth: <input type=\"text\" name=\"dob\""> + actor.getDOB() + "</input></div>");
-            out.println("<div>Short Bio: <input type=\"text\" name=\"bio\""> + actor.getBio() + "</input></div>");
+        if (actorToUpdate != null) {
+            out.println("<div>Name: <input type=\"text\" name=\"name\">" + actorToUpdate.getName() + "</input></div>");
+            out.println("<div>Date of Birth: <input type=\"text\" name=\"dob\">" + actorToUpdate.getDOB() + "</input></div>");
+            out.println("<div>Short Bio: <input type=\"text\" name=\"bio\">" + actorToUpdate.getBio() + "</input></div>");
         }
         else {
             out.println("<div>Name: <input type=\"text\" name=\"name\" /></div>");

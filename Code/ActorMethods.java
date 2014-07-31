@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class ActorMethods {
 
     private static Connection conn = null;
+    private java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); // Used for outputting the date
 
     public String openDBConnection(String dbUser, String dbPass, String dbSID, String dbHost, int port) {
 
@@ -51,23 +52,10 @@ public class ActorMethods {
      */
     public Actor addActor(Actor newActor) {
         try {
-            int sid = 1 + DBUtils.getIntFromDB(_conn, "select max(sid) from Students");
-            newStudent.setId(sid);
-            String query = "insert into Students (sid, name) values ("  +
-                    newStudent.getId() + ", '" + newStudent.getName() + "')";
-            DBUtils.executeUpdate(_conn, query);
-        } catch (SQLException sqle) {
-            sqle.printStackTrace(System.err);
-        }
-        return newStudent;
-
-
-
-        try {
-            int sid = 1 + DBUtils.getIntFromDB(_conn, "SELECT MAX(aid) FROM actors");
+            int sid = 1 + DBUtils.getIntFromDB(conn, "SELECT MAX(aid) FROM actors");
 
             String query = "INSERT INTO actors VALUES (" + sid + ", '" + newActor.getName() + "', " +
-                    "to_date('" + df.format(changedActor.getDOB()) + "', 'MM/dd/yyyy')" + ", '" +
+                    "to_date('" + df.format(newActor.getDOB()) + "', 'MM/dd/yyyy')" + ", '" +
                     newActor.getBio() + "')";
             DBUtils.executeUpdate(conn, query);
         } catch (SQLException sqlEx) {
@@ -93,10 +81,10 @@ public class ActorMethods {
 
             String query = "UPDATE actors SET name = '" + changedActor.getName() +
                     "', dob = to_date('" + df.format(changedActor.getDOB()) + "', 'MM/dd/yyyy')" +
-                    ", bio = '" + changedActor.getBio() + "' WHERE aid = '" + changedActor.getAID();
+                    ", bio = '" + changedActor.getBio() + "' WHERE aid = " + changedActor.getAID();
             DBUtils.executeUpdate(conn, query);
 
-            query = "SELECT aid, name, dob, bio FROM actors WHERE aid = " + aid;
+            query = "SELECT aid, name, dob, bio FROM actors WHERE aid = " + changedActor.getAID();
 
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
