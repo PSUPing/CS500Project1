@@ -13,15 +13,17 @@ import java.sql.Statement;
  *
  */
 public class HTMLUtils {
-    public static String renderHeader(String pageName, String userName, boolean loggedIn) {
+    public static String renderHeader(String pageName, String userName, String servletName) {
         String header = "<html>\n\t<head>\n\t\t<title>Internet Actor Database (IADB) - " + pageName +
-                "Actors</title>\n\t</head>\n\t<body>\n";
+                "</title>\n\t</head>\n\t<body>\n";
 
-        if (!loggedIn)
-            header += "\t\t<div style=\"text-align:right\"><a href=\"LoginServlet\">Login</a></div>\n";
-        else
-            header += "\t\t<div style=\"text-align:right\">User: " + userName +"</div>\n" +
-                    "\t\t<div style=\"text-align:right\"><a href=\"EditServlet\">Edit Page</a></div>\n";
+        if (servletName != "LoginServlet") {
+            if (userName.equals(""))
+                header += "\t\t<div style=\"text-align:right\"><a href=\"LoginServlet?page=" + servletName + "\">Login</a></div>\n";
+            else
+                header += "\t\t<div style=\"text-align:right\">User: " + userName +" <a href=\"" + servletName + "\">Logout</a></div>\n" +
+                        "\t\t<div style=\"text-align:right\"><a href=\"" + servletName + "?uid=" + userName + "&add=true\">Add</a> <a href=\"" + servletName + "?uid=" + userName + "&edit=true\">Edit</a></div>\n";
+        }
 
         return header;
     }

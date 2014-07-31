@@ -1,5 +1,17 @@
-create table Users(
-	UID varchar(24) primary key,
+drop table Actors_Role_In;
+drop table Ratings;
+drop table Reviews;
+drop table Quotes;
+drop table Awards;
+drop table Trivia;
+drop table News;
+
+drop table Users;
+drop table Actors;
+drop table Titles;
+
+create table Users (
+	userID varchar(24) primary key,
 	pwd varchar(128),
 	dob date,
 	date_joined date
@@ -33,12 +45,12 @@ create table Actors_Role_In(
 create table Ratings(
 	AID number,
 	TID number,
-	UID number,
+	userID varchar(24),
 	score number,
-	primary key (AID, TID, UID),
+	primary key (AID, TID, userID),
 	foreign key (TID) references Titles(TID),
 	foreign key (AID) references Actors(AID),
-	foreign key (UID) references Users(UID)
+	foreign key (userID) references Users(userID)
 );
 
 create table Reviews(

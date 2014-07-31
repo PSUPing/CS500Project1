@@ -76,8 +76,25 @@
       <file leaf-file-name="Actor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Actor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="0" selection-start="957" selection-end="957" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="945">
-              <folding />
+            <state line="15" column="0" selection-start="323" selection-end="323" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1320">
+              <folding>
+                <element signature="e#661#662#0" expanded="true" />
+                <element signature="e#691#692#0" expanded="true" />
+                <element signature="e#722#723#0" expanded="true" />
+                <element signature="e#754#755#0" expanded="true" />
+                <element signature="e#791#792#0" expanded="true" />
+                <element signature="e#822#823#0" expanded="true" />
+                <element signature="e#852#853#0" expanded="true" />
+                <element signature="e#883#884#0" expanded="true" />
+                <element signature="e#955#956#0" expanded="true" />
+                <element signature="e#984#985#0" expanded="true" />
+                <element signature="e#1024#1025#0" expanded="true" />
+                <element signature="e#1056#1057#0" expanded="true" />
+                <element signature="e#1101#1102#0" expanded="true" />
+                <element signature="e#1131#1132#0" expanded="true" />
+                <element signature="e#1169#1170#0" expanded="true" />
+                <element signature="e#1199#1200#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -85,8 +102,10 @@
       <file leaf-file-name="ActorMethods.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ActorMethods.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="166" column="25" selection-start="4845" selection-end="4845" vertical-scroll-proportion="1.8846154" vertical-offset="2479" max-vertical-offset="3360">
-              <folding />
+            <state line="149" column="0" selection-start="4511" selection-end="4511" vertical-scroll-proportion="0.0" vertical-offset="1943" max-vertical-offset="2955">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -94,7 +113,7 @@
       <file leaf-file-name="HTMLUtils.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/HTMLUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="562" selection-end="562" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
+            <state line="23" column="0" selection-start="790" selection-end="790" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -105,9 +124,62 @@
       <file leaf-file-name="ActorServlet.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ActorServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="44" selection-start="2335" selection-end="2335" vertical-scroll-proportion="0.6" vertical-offset="525" max-vertical-offset="1470">
+            <state line="84" column="13" selection-start="3251" selection-end="3251" vertical-scroll-proportion="1.5969582" vertical-offset="0" max-vertical-offset="2190">
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginServlet.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LoginServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="90" column="66" selection-start="3425" selection-end="3470" vertical-scroll-proportion="0.0" vertical-offset="788" max-vertical-offset="1710">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserMethods.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/UserMethods.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="115" column="0" selection-start="3500" selection-end="3500" vertical-scroll-proportion="0.0" vertical-offset="1163" max-vertical-offset="1965">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="User.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="80" selection-start="283" selection-end="293" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1185">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ActorRole.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ActorRole.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1035">
+              <folding>
+                <element signature="e#497#498#0" expanded="false" />
+                <element signature="e#527#528#0" expanded="false" />
+                <element signature="e#554#555#0" expanded="false" />
+                <element signature="e#584#585#0" expanded="false" />
+                <element signature="e#615#616#0" expanded="false" />
+                <element signature="e#643#644#0" expanded="false" />
+                <element signature="e#715#716#0" expanded="false" />
+                <element signature="e#744#745#0" expanded="false" />
+                <element signature="e#779#780#0" expanded="false" />
+                <element signature="e#808#809#0" expanded="false" />
+                <element signature="e#848#849#0" expanded="false" />
+                <element signature="e#876#877#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -136,10 +208,12 @@
         <option value="$PROJECT_DIR$/DBUtils.java" />
         <option value="$PROJECT_DIR$/ActorViewServlet.java" />
         <option value="$PROJECT_DIR$/ActorEditServlet.java" />
-        <option value="$PROJECT_DIR$/ActorMethods.java" />
+        <option value="$PROJECT_DIR$/UserMethods.java" />
+        <option value="$PROJECT_DIR$/LoginServlet.java" />
         <option value="$PROJECT_DIR$/Actor.java" />
-        <option value="$PROJECT_DIR$/HTMLUtils.java" />
+        <option value="$PROJECT_DIR$/ActorMethods.java" />
         <option value="$PROJECT_DIR$/ActorServlet.java" />
+        <option value="$PROJECT_DIR$/HTMLUtils.java" />
       </list>
     </option>
   </component>
@@ -413,14 +487,33 @@
     <entry file="file://$PROJECT_DIR$/Actor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="72" column="5" selection-start="1617" selection-end="1617" vertical-scroll-proportion="0.0" vertical-offset="1080" max-vertical-offset="1185">
-          <folding />
+          <folding>
+            <element signature="e#661#662#0" expanded="true" />
+            <element signature="e#691#692#0" expanded="true" />
+            <element signature="e#722#723#0" expanded="true" />
+            <element signature="e#754#755#0" expanded="true" />
+            <element signature="e#791#792#0" expanded="true" />
+            <element signature="e#822#823#0" expanded="true" />
+            <element signature="e#852#853#0" expanded="true" />
+            <element signature="e#883#884#0" expanded="true" />
+            <element signature="e#955#956#0" expanded="true" />
+            <element signature="e#984#985#0" expanded="true" />
+            <element signature="e#1024#1025#0" expanded="true" />
+            <element signature="e#1056#1057#0" expanded="true" />
+            <element signature="e#1101#1102#0" expanded="true" />
+            <element signature="e#1131#1132#0" expanded="true" />
+            <element signature="e#1169#1170#0" expanded="true" />
+            <element signature="e#1199#1200#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ActorMethods.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="129" column="0" selection-start="3812" selection-end="3812" vertical-scroll-proportion="0.0" vertical-offset="1620" max-vertical-offset="3420">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -463,23 +556,87 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ActorMethods.java">
+    <entry file="file://$PROJECT_DIR$/ActorRole.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="166" column="25" selection-start="4845" selection-end="4845" vertical-scroll-proportion="1.8846154" vertical-offset="2479" max-vertical-offset="3360">
-          <folding />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1035">
+          <folding>
+            <element signature="e#497#498#0" expanded="false" />
+            <element signature="e#527#528#0" expanded="false" />
+            <element signature="e#554#555#0" expanded="false" />
+            <element signature="e#584#585#0" expanded="false" />
+            <element signature="e#615#616#0" expanded="false" />
+            <element signature="e#643#644#0" expanded="false" />
+            <element signature="e#715#716#0" expanded="false" />
+            <element signature="e#744#745#0" expanded="false" />
+            <element signature="e#779#780#0" expanded="false" />
+            <element signature="e#808#809#0" expanded="false" />
+            <element signature="e#848#849#0" expanded="false" />
+            <element signature="e#876#877#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UserMethods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="115" column="0" selection-start="3500" selection-end="3500" vertical-scroll-proportion="0.0" vertical-offset="1163" max-vertical-offset="1965">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Actor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="0" selection-start="957" selection-end="957" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="945">
+        <state line="15" column="0" selection-start="323" selection-end="323" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1320">
+          <folding>
+            <element signature="e#661#662#0" expanded="true" />
+            <element signature="e#691#692#0" expanded="true" />
+            <element signature="e#722#723#0" expanded="true" />
+            <element signature="e#754#755#0" expanded="true" />
+            <element signature="e#791#792#0" expanded="true" />
+            <element signature="e#822#823#0" expanded="true" />
+            <element signature="e#852#853#0" expanded="true" />
+            <element signature="e#883#884#0" expanded="true" />
+            <element signature="e#955#956#0" expanded="true" />
+            <element signature="e#984#985#0" expanded="true" />
+            <element signature="e#1024#1025#0" expanded="true" />
+            <element signature="e#1056#1057#0" expanded="true" />
+            <element signature="e#1101#1102#0" expanded="true" />
+            <element signature="e#1131#1132#0" expanded="true" />
+            <element signature="e#1169#1170#0" expanded="true" />
+            <element signature="e#1199#1200#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="80" selection-start="283" selection-end="293" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1185">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LoginServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="66" selection-start="3425" selection-end="3470" vertical-scroll-proportion="0.0" vertical-offset="788" max-vertical-offset="1710">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ActorMethods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="149" column="0" selection-start="4511" selection-end="4511" vertical-scroll-proportion="0.0" vertical-offset="1943" max-vertical-offset="2955">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/HTMLUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="562" selection-end="562" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
+        <state line="23" column="0" selection-start="790" selection-end="790" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -488,7 +645,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ActorServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="44" selection-start="2335" selection-end="2335" vertical-scroll-proportion="0.6" vertical-offset="525" max-vertical-offset="1470">
+        <state line="84" column="13" selection-start="3251" selection-end="3251" vertical-scroll-proportion="1.5969582" vertical-offset="0" max-vertical-offset="2190">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

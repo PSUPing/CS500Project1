@@ -12,6 +12,8 @@ public class Actor {
     private java.sql.Date actorDob;
     private String actorBio;
 
+    private java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); // Used for outputting the date
+
     /********** Constructors **********/
 
     public Actor(int aid) {
@@ -27,7 +29,7 @@ public class Actor {
 
     /********** Getters **********/
 
-    public String getAID() {
+    public int getAID() {
         return actorID;
     }
 
@@ -64,7 +66,7 @@ public class Actor {
     /********** Output Methods **********/
 
     public String toString() {
-        return "(AID: " + aid + ") Name: " + actorName + " DOB: " + actorDob + " Bio: " + actorBio;
+        return "(AID: " + actorID + ") Name: " + actorName + " DOB: " + actorDob + " Bio: " + actorBio;
     }
 
     public String toViewHTML() {

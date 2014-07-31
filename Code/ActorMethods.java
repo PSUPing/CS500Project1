@@ -13,12 +13,9 @@ public class ActorMethods {
 
     private static Connection conn = null;
 
-    /**
-     * Open the database connection.
-     */
     public String openDBConnection(String dbUser, String dbPass, String dbSID, String dbHost, int port) {
-        String res="";
 
+        String res="";
         if (conn != null) {
             closeDBConnection();
         }
@@ -27,12 +24,11 @@ public class ActorMethods {
             conn = DBUtils.openDBConnection(dbUser, dbPass, dbSID, dbHost, port);
             System.out.println("Opened a connection");
             res = DBUtils.testConnection(conn);
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace(System.err);
-        } catch (ClassNotFoundException cnfEx) {
-            cnfEx.printStackTrace(System.err);
+        } catch (SQLException sqle) {
+            sqle.printStackTrace(System.err);
+        } catch (ClassNotFoundException cnfe) {
+            cnfe.printStackTrace(System.err);
         }
-
         return res;
     }
 
@@ -55,8 +51,24 @@ public class ActorMethods {
      */
     public Actor addActor(Actor newActor) {
         try {
-            String query = "INSERT INTO actors (name, dob, bio) VALUES ('" +
-                    newActor.getName() + "', '" + newActor.getDOB() + "', '" + newActor.getBio() + "');";
+            int sid = 1 + DBUtils.getIntFromDB(_conn, "select max(sid) from Students");
+            newStudent.setId(sid);
+            String query = "insert into Students (sid, name) values ("  +
+                    newStudent.getId() + ", '" + newStudent.getName() + "')";
+            DBUtils.executeUpdate(_conn, query);
+        } catch (SQLException sqle) {
+            sqle.printStackTrace(System.err);
+        }
+        return newStudent;
+
+
+
+        try {
+            int sid = 1 + DBUtils.getIntFromDB(_conn, "SELECT MAX(aid) FROM actors");
+
+            String query = "INSERT INTO actors VALUES (" + sid + ", '" + newActor.getName() + "', " +
+                    "to_date('" + df.format(changedActor.getDOB()) + "', 'MM/dd/yyyy')" + ", '" +
+                    newActor.getBio() + "')";
             DBUtils.executeUpdate(conn, query);
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace(System.err);
@@ -74,24 +86,48 @@ public class ActorMethods {
         Actor actor = null;
 
         try {
-            int cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM actors WHERE name = '" + changedActor.getName() +
-                "' AND '" + changedActor.getDOB() + "';");
+            int cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM actors WHERE aid = " + changedActor.getAID());
 
             if (cnt == 0)
                 return actor;
 
-            String query = "UPDATE actors SET bio = '" + changedActor.getBio() + "' WHERE name = '" + changedActor.getName() +
-                    "' AND '" + changedActor.getDOB() + "';";
+            String query = "UPDATE actors SET name = '" + changedActor.getName() +
+                    "', dob = to_date('" + df.format(changedActor.getDOB()) + "', 'MM/dd/yyyy')" +
+                    ", bio = '" + changedActor.getBio() + "' WHERE aid = '" + changedActor.getAID();
             DBUtils.executeUpdate(conn, query);
 
-            query = "SELECT name, dob, bio FROM actors WHERE name = '" + changedActor.getName() +
-                    "' AND '" + changedActor.getDOB() + "';";
+            query = "SELECT aid, name, dob, bio FROM actors WHERE aid = " + aid;
 
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             result.next();
-            actor = new Actor(changedActor.getName(), changedActor.getDOB(), result.getString("bio"));
+            actor = new Actor(changedActor.getAID(), result.getString("name"), result.getDate("dob"), result.getString("bio"));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+
+        return actor;
+    }
+
+    /**
+     * Get an new actor from the database by the primary key.
+     * @param aid
+     * @return
+     */
+    public Actor getActor(int aid) {
+        Actor actor = null;
+
+        try {
+            String query = "SELECT aid, name, dob, bio FROM actors WHERE aid = " + aid;
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            result.next();
+            actor = new Actor(result.getInt("aid"), result.getString("name"), result.getDate("dob"), result.getString("bio"));
 
             result.close();
             stmt.close();
@@ -105,19 +141,18 @@ public class ActorMethods {
     /**
      * Get an new actor from the database by the primary key.
      * @param name
-     * @param dob
      * @return
      */
-    public Actor getActor(String name, java.sql.Date dob) {
+    public Actor getActorByName(String name) {
         Actor actor = null;
 
         try {
-            String query = "SELECT name, dob, bio FROM actors WHERE name = '" + name + "' AND '" + dob + "';";
+            String query = "SELECT aid, name, dob, bio FROM actors WHERE name = " + name;
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             result.next();
-            actor = new Actor(result.getString("name"), result.getDate("dob"), result.getString("bio"));
+            actor = new Actor(result.getInt("aid"), result.getString("name"), result.getDate("dob"), result.getString("bio"));
 
             result.close();
             stmt.close();
@@ -129,95 +164,29 @@ public class ActorMethods {
     }
 
     /**
-     * Get all the actors
+     * Grab the first 10 actors from the DB.
      * @return
      */
-    public ArrayList getSQLTopActors() {
+    public ArrayList getFirst10Actors() {
         ArrayList actors = new ArrayList();
+        int currCount = 0;
 
         try {
-            String query = "SELECT TOP 25 name, dob, bio FROM actors;";
+            String query = "SELECT aid, name, dob, bio FROM actors";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
-            while (result.next())
-                actors.add(new Actor(result.getString("name"), result.getDate("dob"), result.getString("bio")));
-
-            result.close();
-            stmt.close();
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace(System.err);
-        }
-
-        return actors;
-    }
-
-    /**
-     * Get all the actors.
-     * @return
-     */
-    public ArrayList getAllActors() {
-        ArrayList actors = new ArrayList();
-
-        try {
-            String query = "SELECT name, dob, bio FROM actors;";
-            Statement stmt = conn.createStatement();
-            ResultSet result = stmt.executeQuery(query);
-
-            while (result.next())
-                actors.add(new Actor(result.getString("name"), result.getDate("dob"), result.getString("bio")));
-
-            result.close();
-            stmt.close();
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace(System.err);
-        }
-
-        return actors;
-    }
-
-/*    public static void main (String args[]) {
-
-        if (args.length < 4) {
-            System.out.println("Not enough arguments: Registrar dbUser dbPass dbSID dbHost");
-            System.exit(0);
-        }
-        String dbUser = args[0].trim();
-        String dbPass = args[1].trim();
-        String dbSID = args[2].trim();
-        String dbHost = args[3].trim();
-        int dbPort = 1521;
-
-        Registrar reg = new Registrar();
-        try {
-            String response = reg.openDBConnection(dbUser, dbPass, dbSID, dbHost, dbPort);
-            System.out.println(response);
-
-            Student newStudent = reg.registerStudent(new Student("Julia"));
-            System.out.println("\nRegistered a new student: " + newStudent.toString());
-
-            newStudent = reg.setGPA(newStudent.getId(), 3.9);
-            System.out.println("\nUpdated GPA for student: " + newStudent.toString());
-
-            // Student [] roster = reg.getRoster();
-            ArrayList roster = reg.getRoster();
-            System.out.println("\nPrinting the roster");
-            //for (Student student : roster) {
-            for (int i=0; i<roster.size(); i++) {
-                Student student = (Student)roster.get(i);
-                System.out.println(student.toString());
+            while (result.next() && currCount <= 10) {
+                actors.add(new Actor(result.getInt("aid"), result.getString("name"), result.getDate("dob"), result.getString("bio")));
+                currCount++;
             }
 
-            String [] terms = {"Summer 2010", "Fall 2010", "Spring 2011", "Summer 2011"};
-            reg.addTermsDynamicSQL(terms);
-
-            String [] moreTerms = {"Summer 2012", "Fall 2012"};
-            reg.addTermsPreparedStatement(moreTerms);
-
-        } catch (RuntimeException rte) {
-            rte.printStackTrace();
-        } finally {
-            reg.closeDBConnection();
+            result.close();
+            stmt.close();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace(System.err);
         }
-    }*/
+
+        return actors;
+    }
 }

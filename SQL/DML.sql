@@ -5,10 +5,10 @@
 INSERT INTO users VALUES ('psuping', 'test1', to_date('1982/04/15', 'YYYY/MM/DD'), to_date('2013/07/01', 'YYYY/MM/DD'));
 INSERT INTO users VALUES ('mrbucci', 'test2', to_date('1986/07/30', 'YYYY/MM/DD'), to_date('2013/07/05', 'YYYY/MM/DD'));
 
-UPDATE users SET pwd = 'testing' WHERE uid = 1;
+UPDATE users SET pwd = 'testing' WHERE userid = 'psuping';
 
-SELECT uid, pwd, dob, date_joined FROM users;
-SELECT uid, pwd, dob, date_joined FROM users WHERE uid = 2;
+SELECT userid, pwd, dob, date_joined FROM users;
+SELECT userid, pwd, dob, date_joined FROM users WHERE uid = 2;
 
 -- Actors
 
