@@ -121,13 +121,14 @@ public class ActorServlet extends HttpServlet {
                     if (aid > -1)
                         renderActor(out, actMethods.getActor(aid));
                     else {
-                        if (!uid.equals(""))
-                            out.println("\t\t<div style=\"text-align:right\"><a href=\"ActorServlet?uid=" + uid + "&add=true\">Add</a></div>");
-
                         ArrayList actors = actMethods.getActorByName(aName);
 
-                        if (actors.size() > 1)
+                        if (actors.size() > 1) {
+                            if (!uid.equals(""))
+                                out.println("\t\t<div style=\"text-align:right\"><a href=\"ActorServlet?uid=" + uid + "&add=true\">Add</a></div>");
+
                             renderActorTable(out, actors);
+                        }
                         else {
                             Actor actor = (Actor) actors.get(0);
                             renderActor(out, actor);
