@@ -175,4 +175,31 @@ public class TitleMethods {
 
         return titles;
     }
+
+    /**
+     * Grab the titles for an Actor and their role in that title.
+     * @return
+     */
+    public ArrayList getTitlesAndRole(int aid) {
+        ArrayList extendedTitles = new ArrayList();
+        int currCount = 0;
+
+        try {
+            String query = "SELECT tid, name, genre, year, snyopsis, title_type, role FROM titles t INNER JOIN Actor_Role_In ar ON (t.tid = ar.tid) WHERE ar.aid = " +
+                            aid;
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            while (result.next() && currCount <= 10)
+                extendedTitles.add(new TitleActorRole(result.getInt("tid"), result.getString("name"), result.getString("genre"), 
+                    result.getInt("year"), result.getString("snyopsis"), result.getString("title_type"), result.getString("role")));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace(System.err);
+        }
+
+        return extendedTitles;
+    }
 }
