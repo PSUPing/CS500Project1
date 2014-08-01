@@ -55,7 +55,7 @@ public class ActorMethods {
             int sid = 1 + DBUtils.getIntFromDB(conn, "SELECT MAX(aid) FROM actors");
 
             String query = "INSERT INTO actors VALUES (" + sid + ", '" + newActor.getName() + "', " +
-                    "to_date('" + df.format(newActor.getDOB()) + "', 'MM/dd/yyyy')" + ", '" +
+                    "to_date('" + df.format(newActor.getDOB()) + "', 'MM/DD/YYYY')" + ", '" +
                     newActor.getBio() + "')";
             DBUtils.executeUpdate(conn, query);
         } catch (SQLException sqlEx) {
@@ -80,7 +80,7 @@ public class ActorMethods {
                 return actor;
 
             String query = "UPDATE actors SET name = '" + changedActor.getName() +
-                    "', dob = to_date('" + df.format(changedActor.getDOB()) + "', 'MM/dd/yyyy')" +
+                    "', dob = to_date('" + df.format(changedActor.getDOB()) + "', 'MM/DD/YYYY')" +
                     ", bio = '" + changedActor.getBio() + "' WHERE aid = " + changedActor.getAID();
             DBUtils.executeUpdate(conn, query);
 
@@ -131,16 +131,17 @@ public class ActorMethods {
      * @param name
      * @return
      */
-    public Actor getActorByName(String name) {
-        Actor actor = null;
+    public ArrayList getActorByName(String name) {
+        ArrayList actors = new ArrayList();
 
         try {
-            String query = "SELECT aid, name, dob, bio FROM actors WHERE name = " + name;
+            String query = "SELECT aid, name, dob, bio FROM actors WHERE name LIKE '" + name + "%'";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
-            result.next();
-            actor = new Actor(result.getInt("aid"), result.getString("name"), result.getDate("dob"), result.getString("bio"));
+            // A loop may not be needed, but it will ensure that actor is null if there is no result
+            while (result.next() )
+                actors.add(new Actor(result.getInt("aid"), result.getString("name"), result.getDate("dob"), result.getString("bio")));
 
             result.close();
             stmt.close();
@@ -148,26 +149,24 @@ public class ActorMethods {
             sqlEx.printStackTrace(System.err);
         }
 
-        return actor;
+        return actors;
     }
 
     /**
      * Grab the first 10 actors from the DB.
      * @return
      */
-    public ArrayList getFirst10Actors() {
+    public ArrayList getRecentActors() {
         ArrayList actors = new ArrayList();
         int currCount = 0;
 
         try {
-            String query = "SELECT aid, name, dob, bio FROM actors";
+            String query = "SELECT aid, name, dob, bio FROM actors ORDER BY aid DESC";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
-            while (result.next() && currCount <= 10) {
+            while (result.next() && currCount <= 10)
                 actors.add(new Actor(result.getInt("aid"), result.getString("name"), result.getDate("dob"), result.getString("bio")));
-                currCount++;
-            }
 
             result.close();
             stmt.close();

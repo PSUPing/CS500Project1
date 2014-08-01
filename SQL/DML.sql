@@ -17,6 +17,7 @@ INSERT INTO actors VALUES (2, 'Gregg Bruger', to_date('1965/06/05', 'YYYY/MM/DD'
 INSERT INTO actors VALUES (3, 'Norman Reedus', to_date('1975/06/05', 'YYYY/MM/DD'), 'American Actor');
 
 UPDATE actors SET bio = 'Star of Transformers 4' WHERE aid = 1;
+UPDATE actors SET name = 'Mark Wahlberg', bio = 'Star of Transformers 4' WHERE aid = 1;
 
 SELECT aid, name, dob, bio FROM actors;
 SELECT aid, name, dob, bio FROM actors WHERE aid = 2;

@@ -21,8 +21,7 @@ public class HTMLUtils {
             if (userName.equals(""))
                 header += "\t\t<div style=\"text-align:right\"><a href=\"LoginServlet?page=" + servletName + "\">Login</a></div>\n";
             else
-                header += "\t\t<div style=\"text-align:right\">User: " + userName +" <a href=\"" + servletName + "\">Logout</a></div>\n" +
-                        "\t\t<div style=\"text-align:right\"><a href=\"" + servletName + "?uid=" + userName + "&add=true\">Add</a> <a href=\"" + servletName + "?uid=" + userName + "&edit=true\">Edit</a></div>\n";
+                header += "\t\t<div style=\"text-align:right\">User: " + userName +" <a href=\"" + servletName + "\">Logout</a></div>\n";
         }
 
         return header;
