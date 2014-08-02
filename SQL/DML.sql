@@ -46,17 +46,17 @@ SELECT aid, tid, role FROM Actors_Role_In WHERE aid = 3 AND tid = 2;
 
 -- Ratings
 
-INSERT INTO ratings VALUES (3, 3, 1, 4);
-INSERT INTO ratings VALUES (3, 3, 2, 5);
-INSERT INTO ratings VALUES (1, 1, 1, 3);
-INSERT INTO ratings VALUES (3, 2, 2, 4);
+INSERT INTO ratings VALUES (3, 3, 'psuping', 4);
+INSERT INTO ratings VALUES (3, 3, 'mrbucci', 5);
+INSERT INTO ratings VALUES (1, 1, 'psuping', 3);
+INSERT INTO ratings VALUES (3, 2, 'mrbucci', 4);
 
-UPDATE ratings SET score = 4 WHERE aid = 1 AND tid = 1 AND uid = 1;
+UPDATE ratings SET score = 4 WHERE aid = 1 AND tid = 1 AND userid = 'psuping';
 
-SELECT aid, tid, uid, score FROM ratings;
-SELECT aid, tid, uid, score FROM ratings WHERE aid = 3;
-SELECT aid, tid, uid, score FROM ratings WHERE tid = 3;
-SELECT aid, tid, uid, score FROM ratings WHERE uid = 2;
+SELECT aid, tid, userid, score FROM ratings;
+SELECT aid, tid, userid, score FROM ratings WHERE aid = 3;
+SELECT aid, tid, userid, score FROM ratings WHERE tid = 3;
+SELECT aid, tid, userid, score FROM ratings WHERE userid = 'mrbucci';
 
 -- Reviews
 

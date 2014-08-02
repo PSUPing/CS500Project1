@@ -45,6 +45,10 @@ public class ActorMethods {
         }
     }
 
+    public Connection getConn() {
+        return conn;
+    }
+
     /**
      * Create a new actor in the database.
      * @param newActor

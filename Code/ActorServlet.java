@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 public class ActorServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ActorMethods actMethods;
+    private TitleMethods titleMethods;
     private ResourceBundle bundle;
     private String message;
 
@@ -31,6 +32,7 @@ public class ActorServlet extends HttpServlet {
     public void init() throws ServletException {
         bundle = ResourceBundle.getBundle("OraBundle");
         actMethods = new ActorMethods();
+        titleMethods = new TitleMethods();
         message = actMethods.openDBConnection(bundle.getString("dbUser"), bundle.getString("dbPass"), bundle.getString("dbSID"),
                 bundle.getString("dbHost"), Integer.parseInt(bundle.getString("dbPort")));
     }
@@ -106,15 +108,6 @@ public class ActorServlet extends HttpServlet {
                     if (!uid.equals(""))
                         out.println("\t\t<div style=\"text-align:right\"><a href=\"ActorServlet?uid=" + uid + "&add=true\">Add</a></div>");
 
-                    out.println("\t\t<form action=\"ActorServlet\" method=\"get\">");
-                    out.println("\t\t\t<h2>Actor search: </h2>");
-
-                    if (!uid.equals(""))
-                        out.println("\t\t\t<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
-
-                    out.println("\t\t\t<input type=\"text\" name=\"name\" /><input type=\"submit\" value=\"Search\" />");
-                    out.println("\t\t</form>");
-
                     renderActorTable(out, actMethods.getRecentActors());
                 }
                 else {
@@ -173,6 +166,14 @@ public class ActorServlet extends HttpServlet {
     }
 
     private void renderActorTable(PrintWriter out, ArrayList actors) {
+        out.println("\t\t<form action=\"ActorServlet\" method=\"get\">");
+        out.println("\t\t\t<h2>Actor search: </h2>");
+
+        if (!uid.equals(""))
+            out.println("\t\t\t<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
+
+        out.println("\t\t\t<input type=\"text\" name=\"name\" /><input type=\"submit\" value=\"Search\" />");
+        out.println("\t\t</form>");
         out.println("\t\t<table>");
         out.println("\t\t\t<tr>");
         out.println("\t\t\t\t<td><b>Name</b></td>");
@@ -198,15 +199,59 @@ public class ActorServlet extends HttpServlet {
         out.println("\t\t</table>");
     }
 
+    private void renderActorTitles(PrintWriter out) {
+        titleMethods.setConn(actMethods.getConn());
+        ArrayList titles = titleMethods.getTitlesAndRole(aid);
+
+        if (titles.size() > 0) {
+            out.println("\t\t<h2>Titles Stared In</h2>");
+            out.println("\t\t<table>");
+            out.println("\t\t\t<tr>");
+            out.println("\t\t\t\t<td><b>Title Name</b></td>");
+            out.println("\t\t\t\t<td><b>Release Year</b></td>");
+            out.println("\t\t\t\t<td><b>Synopsis</b></td>");
+            out.println("\t\t\t\t<td><b>Genre</b></td>");
+            out.println("\t\t\t\t<td><b>Actor's Role</b></td>");
+            out.println("\t\t\t</tr>");
+
+            for (int i = 0; i < titles.size(); i++) {
+                TitleActorRole title = (TitleActorRole)  titles.get(i);
+
+                out.println("\t\t\t<tr>");
+                out.println("\t\t\t\t<td><a href=\"TitleServlet?aid=" + aid + "&uid=" + uid + "&tid=" + title.getTID() + "\">" + title.getName() + "</a></td>");
+                out.println("\t\t\t\t<td>" + title.getYear() + "</td>");
+                out.println("\t\t\t\t<td>" + title.getSynopsis() + "</td>");
+                out.println("\t\t\t\t<td>" + title.getGenre() + "</td>");
+                out.println("\t\t\t\t<td>" + title.getRole() + "</td>");
+                out.println("\t\t\t</tr>");
+            }
+
+            out.println("\t\t</table><br />");
+            out.println("<div><a href=\"TitleServlet?uid=" + uid + "&aid=" + aid + "&add=true\">Add New Movie</a>");
+            out.println("<div><a href=\"RoleServlet?uid=" + uid + "&aid=" + aid + "&add=true\">Add New Role</a>");
+        }
+    }
+
     private void renderActor(PrintWriter out, Actor displayActor) {
         if (!uid.equals("")) {
             out.println("\t\t<div style=\"text-align:right\"><a href=\"ActorServlet?uid=" + uid + "&aid=" + displayActor.getAID() + "&add=true\">Add</a> " +
                     "<a href=\"ActorServlet?uid=" + uid + "&aid=" + displayActor.getAID() + "&edit=true\">Edit</a></div>\n");
         }
 
+        out.println("\t\t<form action=\"ActorServlet\" method=\"get\">");
+        out.println("\t\t\t<h2>Actor search: </h2>");
+
+        if (!uid.equals(""))
+            out.println("\t\t\t<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
+
+        out.println("\t\t\t<input type=\"text\" name=\"name\" /><input type=\"submit\" value=\"Search\" />");
+        out.println("\t\t</form>");
+
         out.println("<div><b>" + displayActor.getName() + "</b></div><br />");
         out.println("<div><b>Born:</b> " + displayActor.getDOB() + "</div><br />");
         out.println("<div><b>Short Bio:</b> " + displayActor.getBio() + "</div><br />");
+
+        renderActorTitles(out);
     }
 
     private void resetValues() {

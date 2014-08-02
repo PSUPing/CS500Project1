@@ -14,6 +14,10 @@ public class TitleMethods {
     private static Connection conn = null;
     private java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); // Used for outputting the date
 
+    public void setConn(Connection connect) {
+        conn = connect;
+    }
+
     public String openDBConnection(String dbUser, String dbPass, String dbSID, String dbHost, int port) {
 
         String res="";
@@ -79,17 +83,17 @@ public class TitleMethods {
                 return title;
 
             String query = "UPDATE titles SET name = '" + changedTitle.getName() + "', genre = '" + changedTitle.getGenre() +
-                    "', year = " + changedTitle.getYear() + "', synopsis = '" + changedTitle.getSynopsis() + "', title_type = '" + 
+                    "', year = " + changedTitle.getYear() + ", synopsis = '" + changedTitle.getSynopsis() + "', title_type = '" +
                     changedTitle.getTitleType() + "' WHERE tid = " + changedTitle.getTID();
             DBUtils.executeUpdate(conn, query);
 
-            query = "SELECT tid, name, genre, year, snyopsis, title_type FROM titles WHERE tid = " + changedTitle.getTID();
+            query = "SELECT tid, name, genre, year, synopsis, title_type FROM titles WHERE tid = " + changedTitle.getTID();
 
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             result.next();
-            title = new Title(result.getInt("tid"), result.getString("name"), result.getString("genre"), result.getInt("year"), result.getString("snyopsis"), result.getString("title_type"));
+            title = new Title(result.getInt("tid"), result.getString("name"), result.getString("genre"), result.getInt("year"), result.getString("synopsis"), result.getString("title_type"));
 
             result.close();
             stmt.close();
@@ -109,12 +113,12 @@ public class TitleMethods {
         Title title = null;
 
         try {
-            String query = "SELECT tid, name, genre, year, snyopsis, title_type FROM titles WHERE tid = " + tid + "%' ORDER BY tid DESC";
+            String query = "SELECT tid, name, genre, year, synopsis, title_type FROM titles WHERE tid = " + tid;
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             result.next();
-            title = new Title(result.getInt("tid"), result.getString("name"), result.getString("genre"), result.getInt("year"), result.getString("snyopsis"), result.getString("title_type"));
+            title = new Title(result.getInt("tid"), result.getString("name"), result.getString("genre"), result.getInt("year"), result.getString("synopsis"), result.getString("title_type"));
 
             result.close();
             stmt.close();
@@ -134,7 +138,7 @@ public class TitleMethods {
         ArrayList titles = new ArrayList();
 
         try {
-            String query = "SELECT tid, name, genre, year, snyopsis, title_type FROM titles WHERE name LIKE '" + name + "%' ORDER BY tid DESC";
+            String query = "SELECT tid, name, genre, year, synopsis, title_type FROM titles WHERE name LIKE '" + name + "%' ORDER BY tid DESC";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
@@ -182,17 +186,16 @@ public class TitleMethods {
      */
     public ArrayList getTitlesAndRole(int aid) {
         ArrayList extendedTitles = new ArrayList();
-        int currCount = 0;
 
         try {
-            String query = "SELECT tid, name, genre, year, snyopsis, title_type, role FROM titles t INNER JOIN Actor_Role_In ar ON (t.tid = ar.tid) WHERE ar.aid = " +
-                            aid;
+            String query = "SELECT t.tid AS tid, name, genre, year, synopsis, title_type, role FROM titles t INNER JOIN Actors_Role_In ar ON (t.tid = ar.tid) WHERE ar.aid = " +
+                            aid + " ORDER BY title_type, name";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
-            while (result.next() && currCount <= 10)
+            while (result.next())
                 extendedTitles.add(new TitleActorRole(result.getInt("tid"), result.getString("name"), result.getString("genre"), 
-                    result.getInt("year"), result.getString("snyopsis"), result.getString("title_type"), result.getString("role")));
+                    result.getInt("year"), result.getString("synopsis"), result.getString("title_type"), result.getString("role")));
 
             result.close();
             stmt.close();
