@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 public class TitleServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TitleMethods titleMethods;
+    private ReviewMethods reviewMethods;
     private ResourceBundle bundle;
     private String message;
 
@@ -34,6 +35,7 @@ public class TitleServlet extends HttpServlet {
     public void init() throws ServletException {
         bundle = ResourceBundle.getBundle("OraBundle");
         titleMethods = new TitleMethods();
+        reviewMethods = new ReviewMethods();
         message = titleMethods.openDBConnection(bundle.getString("dbUser"), bundle.getString("dbPass"), bundle.getString("dbSID"),
                 bundle.getString("dbHost"), Integer.parseInt(bundle.getString("dbPort")));
     }
@@ -156,37 +158,38 @@ public class TitleServlet extends HttpServlet {
         }
     }
 
-/*    private void renderActorTitles(PrintWriter out) {
-        titleMethods.setConn(actMethods.getConn());
-        ArrayList titles = titleMethods.getTitlesAndRole(aid);
+    private void renderTitleReviews(PrintWriter out) {
+        reviewMethods.setConn(titleMethods.getConn());
+        ArrayList reviews = reviewMethods.getReivewByTitle(tid);
 
-        if (titles.size() > 0) {
-            out.println("\t\t<h2>Titles Stared In</h2>");
+        if (reviews.size() > 0) {
+            out.println("\t\t<h2>Title Reviews</h2>");
             out.println("\t\t<table>");
             out.println("\t\t\t<tr>");
-            out.println("\t\t\t\t<td><b>Title Name</b></td>");
-            out.println("\t\t\t\t<td><b>Release Year</b></td>");
-            out.println("\t\t\t\t<td><b>Synopsis</b></td>");
-            out.println("\t\t\t\t<td><b>Genre</b></td>");
-            out.println("\t\t\t\t<td><b>Actor's Role</b></td>");
+            out.println("\t\t\t\t<td><b></b></td>");
+            out.println("\t\t\t\t<td><b>Review Source</b></td>");
+            out.println("\t\t\t\t<td><b>Review</b></td>");
+            out.println("\t\t\t\t<td><b>Rating</b></td>");
             out.println("\t\t\t</tr>");
 
-            for (int i = 0; i < titles.size(); i++) {
-                TitleActorRole title = (TitleActorRole)  titles.get(i);
+            for (int i = 0; i < reviews.size(); i++) {
+                Review review = (Review)  reviews.get(i);
 
                 out.println("\t\t\t<tr>");
-                out.println("\t\t\t\t<td><a href=\"TitleServlet?aid=" + aid + "&uid=" + uid + "&tid=" + title.getTID() + "\">" + title.getName() + "</a></td>");
-                out.println("\t\t\t\t<td>" + title.getYear() + "</td>");
-                out.println("\t\t\t\t<td>" + title.getSynopsis() + "</td>");
-                out.println("\t\t\t\t<td>" + title.getGenre() + "</td>");
-                out.println("\t\t\t\t<td>" + title.getRole() + "</td>");
-                out.println("\t\t\t</tr>");
-            }
 
-            out.println("\t\t</table><br />");
-            out.println("<div><a href=\"TitleServlet?uid=" + uid + "&aid=" + aid + "&add=true\">Add New Movie / Role</a>");
+                if (uid.equals(""))
+                    out.println("\t\t\t\t<td><a href=\"ReviewServlet?tid=" + tid + "&revid=" + "\">View</a></td>");
+                else
+                    out.println("\t\t\t\t<td><a href=\"ReviewServlet?tid=" + tid + "&uid=" + uid + "&revid=" + "\">View</a></td>");
+
+                out.println("\t\t\t\t<td>" + review.getReviewSource() + "</td>");
+                out.println("\t\t\t\t<td>" + review.getReviewText() + "</td>");
+                out.println("\t\t\t\t<td>" + review.getScore() + "</td>");
+                out.println("\t\t\t</tr>");
+                out.println("\t\t</table>");
+            }
         }
-    }*/
+    }
 
     private void renderTitle(PrintWriter out, Title displayTitle) {
         if (!uid.equals("")) {
@@ -200,12 +203,13 @@ public class TitleServlet extends HttpServlet {
         out.println("<div><b>Synopsis: </b> " + displayTitle.getSynopsis() + "</div>");
         out.println("<div><b>Title Type: </b> " + displayTitle.getTitleType() + "</div>");
 
+        renderTitleReviews(out);
+        out.println("\t\t<br /><br />");
+
         if (uid.equals(""))
             out.println("<div><a href=\"ActorServlet?aid=" + aid + "\">Back to Actor Page</a></div>");
         else
             out.println("<div><a href=\"ActorServlet?aid=" + aid + "&uid=" + uid + "\">Back to Actor Page</a></div>");
-
-        // renderActorTitles(out);
     }
 
     private void resetValues() {

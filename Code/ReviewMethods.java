@@ -136,12 +136,12 @@ public class ReviewMethods {
         ArrayList reviews = new ArrayList();
 
         try {
-            String query = "SELECT revid, rating, tid, rs, rt FROM reviews WHERE tid= " + tid;
+            String query = "SELECT revid, rating, tid, rs, rt FROM reviews WHERE tid = " + tid;
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next())
-                reviews.add(new Review(result.getInt("revid"), result.getInt("tid"), result.getInt("score"), result.getString("rs"), result.getString("rt")));
+                reviews.add(new Review(result.getInt("revid"), result.getInt("tid"), result.getInt("rating"), result.getString("rs"), result.getString("rt")));
 
             result.close();
             stmt.close();

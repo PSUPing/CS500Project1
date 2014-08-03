@@ -9,12 +9,12 @@ public class Rating {
 
     private int actorID;
     private int titleID;
-    private int userID;
+    private String userID;
     private int ratingScore;
 
     /********** Constructors **********/
 
-    public Rating(int aid, int tid, int uid, int score) {
+    public Rating(int aid, int tid, String uid, int score) {
         actorID = aid;
         titleID = tid;
         userID = uid;
@@ -31,7 +31,7 @@ public class Rating {
         return titleID;
     }
 
-    public int getUID() {
+    public String getUID() {
         return userID;
     }
 
@@ -49,7 +49,7 @@ public class Rating {
         titleID = tid;
     }
 
-    public void setUID(int uid) {
+    public void setUID(String uid) {
         userID = uid;
     }
 

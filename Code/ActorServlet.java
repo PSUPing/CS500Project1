@@ -21,9 +21,11 @@ public class ActorServlet extends HttpServlet {
     private String message;
 
     private int aid = -1;
+    private int tid = -1;
+    private int uRating = -1;
     private String aName = "";
     private String uid = "";
-    private String bio;
+    private String bio = "";
     private java.sql.Date dob;
     private boolean editMode = false;
     private boolean addMode = false;
@@ -55,6 +57,8 @@ public class ActorServlet extends HttpServlet {
                 try {
                     if (tempString[0].equals("aid"))
                         aid = Integer.parseInt(tempString[1]);
+                    else if (tempString[0].equals("tid"))
+                        tid = Integer.parseInt(tempString[1]);
                     else if (tempString[0].equals("uid"))
                         uid = tempString[1];
                     else if (tempString[0].equals("save"))
@@ -66,9 +70,11 @@ public class ActorServlet extends HttpServlet {
                     else if (tempString[0].equals("dob"))
                         dob = java.sql.Date.valueOf(tempString[1]);
                     else if (tempString[0].equals("bio"))
-                        bio = tempString[1].replace('+', ' ');
+                        bio = HTMLUtils.cleanQString(tempString[1]);
                     else if (tempString[0].equals("name"))
-                        aName = tempString[1].replace('+', ' ');
+                        aName = HTMLUtils.cleanQString(tempString[1]);
+                    else if (tempString[0].equals("urating"))
+                        uRating = Integer.parseInt(tempString[1]);
                 } catch (Exception ex) {
                     out.println("<h2>Error parsing query string</h2>");
                 }
@@ -82,14 +88,31 @@ public class ActorServlet extends HttpServlet {
         }
         else {
             if (saveMode) {
-                Actor actor = new Actor(aid, aName, dob, bio);
+                if (uRating == -1) {
+                    Actor actor = new Actor(aid, aName, dob, bio);
 
-                if (editMode)
-                    actor = actMethods.updateActor(actor);
-                else if (addMode)
-                    actor = actMethods.addActor(actor);
+                    if (editMode)
+                        actor = actMethods.updateActor(actor);
+                    else if (addMode)
+                        actor = actMethods.addActor(actor);
 
-                renderActor(out, actor);
+                    renderActor(out, actor);
+                }
+                else {
+                    Rating rating = new Rating(aid, tid, uid, uRating);
+
+                    if (titleMethods.hasActorTitleRating(rating)) {
+                        if (uRating == 0)
+                            titleMethods.removeActorTitleRating(rating);
+                        else
+                            titleMethods.updateRating(rating);
+                    }
+                    else
+                        titleMethods.addActorTitleRating(rating);
+
+                    Actor actor = actMethods.getActor(aid);
+                    renderActor(out, actor);
+                }
             }
             else if (addMode) {
                 renderActorTextBoxes(out, null);
@@ -111,8 +134,10 @@ public class ActorServlet extends HttpServlet {
                     renderActorTable(out, actMethods.getRecentActors());
                 }
                 else {
-                    if (aid > -1)
-                        renderActor(out, actMethods.getActor(aid));
+                    if (aid > -1) {
+                        Actor actor = actMethods.getActor(aid);
+                        renderActor(out, actor);
+                    }
                     else {
                         ArrayList actors = actMethods.getActorByName(aName);
 
@@ -201,7 +226,12 @@ public class ActorServlet extends HttpServlet {
 
     private void renderActorTitles(PrintWriter out) {
         titleMethods.setConn(actMethods.getConn());
-        ArrayList titles = titleMethods.getTitlesAndRole(aid);
+        ArrayList titles = new ArrayList();
+
+        if (!uid.equals(""))
+            titles = titleMethods.getTitlesAndUserRating(aid, uid);
+        else
+            titles = titleMethods.getTitlesAndRole(aid);
 
         if (titles.size() > 0) {
             out.println("\t\t<h2>Titles Stared In</h2>");
@@ -212,23 +242,65 @@ public class ActorServlet extends HttpServlet {
             out.println("\t\t\t\t<td><b>Synopsis</b></td>");
             out.println("\t\t\t\t<td><b>Genre</b></td>");
             out.println("\t\t\t\t<td><b>Actor's Role</b></td>");
+
+            if (!uid.equals("")) {
+                out.println("\t\t\t\t<td><b>" + uid + "'s Rating</b></td>");
+                out.println("\t\t\t\t<td></td>");
+            }
+
             out.println("\t\t\t</tr>");
 
             for (int i = 0; i < titles.size(); i++) {
-                TitleActorRole title = (TitleActorRole)  titles.get(i);
-
                 out.println("\t\t\t<tr>");
-                out.println("\t\t\t\t<td><a href=\"TitleServlet?aid=" + aid + "&uid=" + uid + "&tid=" + title.getTID() + "\">" + title.getName() + "</a></td>");
-                out.println("\t\t\t\t<td>" + title.getYear() + "</td>");
-                out.println("\t\t\t\t<td>" + title.getSynopsis() + "</td>");
-                out.println("\t\t\t\t<td>" + title.getGenre() + "</td>");
-                out.println("\t\t\t\t<td>" + title.getRole() + "</td>");
-                out.println("\t\t\t</tr>");
-            }
 
-            out.println("\t\t</table><br />");
-            out.println("<div><a href=\"TitleServlet?uid=" + uid + "&aid=" + aid + "&add=true\">Add New Movie</a>");
-            out.println("<div><a href=\"RoleServlet?uid=" + uid + "&aid=" + aid + "&add=true\">Add New Role</a>");
+                if (!uid.equals("")) {
+                    ActorTitleRating title = (ActorTitleRating) titles.get(i);
+                    boolean foundRating = false;
+
+                    out.println("\t\t\t\t<td><a href=\"TitleServlet?aid=" + aid + "&uid=" + uid + "&tid=" + title.getTID() + "\">" + title.getName() + "</a></td>");
+                    out.println("\t\t\t\t<td>" + title.getYear() + "</td>");
+                    out.println("\t\t\t\t<td>" + title.getSynopsis() + "</td>");
+                    out.println("\t\t\t\t<td>" + title.getGenre() + "</td>");
+                    out.println("\t\t\t\t<td>" + title.getRole() + "</td>");
+                    out.print("\t\t\t\t<td><select name=\"urating\">");
+
+                    for (int j = 1; j <= 5; j++) {
+                        if (title.getUserRating() == j) {
+                            out.print("<option selected=\"selected\">" + j + "</option>");
+                            foundRating = true;
+                        }
+                        else
+                            out.print("<option>" + j + "</option>");
+                    }
+
+                    if (!foundRating)
+                        out.print("<option selected=\"selected\">" + 0 + "</option>");
+                    else
+                        out.print("<option>" + 0 + "</option>");
+
+                    out.print("</select>\n");
+                    out.print("\t\t\t\t<td><input type=\"submit\" value=\"Save Rating\" />");
+                    out.print("<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
+                    out.print("<input type=\"hidden\" name=\"tid\" value=\"" + title.getTID() + "\" />");
+                    out.print("<input type=\"hidden\" name=\"aid\" value=\"" + aid + "\" />");
+                    out.print("<input type=\"hidden\" name=\"save\" value=\"true\" />");
+                    out.print("\t\t\t</tr>\n");
+                    out.println("\t\t</table><br />");
+                    out.println("\t\t<div><a href=\"TitleServlet?uid=" + uid + "&aid=" + aid + "&tid=" + title.getTID() + "&add=true\">Add New Movie</a>");
+                    out.println("\t\t<div><a href=\"RoleServlet?uid=" + uid + "&aid=" + aid + "&add=true\">Add New Role</a>");
+                }
+                else {
+                    TitleActorRole title = (TitleActorRole)  titles.get(i);
+
+                    out.println("\t\t\t\t<td><a href=\"TitleServlet?aid=" + aid + "&tid=" + title.getTID() + "\">" + title.getName() + "</a></td>");
+                    out.println("\t\t\t\t<td>" + title.getYear() + "</td>");
+                    out.println("\t\t\t\t<td>" + title.getSynopsis() + "</td>");
+                    out.println("\t\t\t\t<td>" + title.getGenre() + "</td>");
+                    out.println("\t\t\t\t<td>" + title.getRole() + "</td>");
+                    out.println("\t\t\t</tr>");
+                    out.println("\t\t</table><br />");
+                }
+            }
         }
     }
 
@@ -248,14 +320,16 @@ public class ActorServlet extends HttpServlet {
         out.println("\t\t</form>");
 
         out.println("<div><b>" + displayActor.getName() + "</b></div><br />");
-        out.println("<div><b>Born:</b> " + displayActor.getDOB() + "</div><br />");
-        out.println("<div><b>Short Bio:</b> " + displayActor.getBio() + "</div><br />");
+        out.println("<div><b>Born:</b> " + displayActor.getDOB() + "</div>");
+        out.println("<div><b>Short Bio:</b> " + displayActor.getBio() + "</div>");
 
         renderActorTitles(out);
     }
 
     private void resetValues() {
         aid = -1;
+        tid = -1;
+        uRating = -1;
         aName = "";
         uid = "";
         bio = "";

@@ -27,6 +27,10 @@ public class HTMLUtils {
         return header;
     }
 
+    public static String cleanQString(String stringToClean) {
+        return stringToClean.replace('+', ' ').replaceAll("%3A", ":");
+    }
+
     public static String renderClosingTags() {
         return "\t</body>\n</html>";
     }
