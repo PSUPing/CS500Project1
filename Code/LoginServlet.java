@@ -19,6 +19,17 @@ public class LoginServlet extends HttpServlet {
     private ResourceBundle bundle;
     private String message;
 
+    private String uid = "";
+    private String pwd = "";
+    private String page = "";
+    private java.sql.Date dob;
+    private java.sql.Date joined;
+    private boolean editMode = false;
+    private boolean addMode = false;
+    private boolean saveMode = false;
+
+    private java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); // Used for outputting the date
+
     public void init() throws ServletException {
         bundle = ResourceBundle.getBundle("OraBundle");
         userMethods = new UserMethods();
@@ -27,12 +38,10 @@ public class LoginServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String uid = "";
-        String pwd = "";
-        String page = "";
-
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
+
+        resetValues();
 
         // Get possible variables for the Actor Servlet
         String queryString = request.getQueryString();
@@ -50,6 +59,16 @@ public class LoginServlet extends HttpServlet {
                         pwd = tempString[1];
                     else if (tempString[0].equals("page"))
                         page = tempString[1];
+                    else if (tempString[0].equals("save"))
+                        saveMode = Boolean.valueOf(tempString[1]).booleanValue();
+                    else if (tempString[0].equals("edit"))
+                        editMode = Boolean.valueOf(tempString[1]).booleanValue();
+                    else if (tempString[0].equals("add"))
+                        addMode = Boolean.valueOf(tempString[1]).booleanValue();
+                    else if (tempString[0].equals("dob"))
+                        dob = java.sql.Date.valueOf(tempString[1]);
+                    else if (tempString[0].equals("joined"))
+                        joined = java.sql.Date.valueOf(tempString[1]);
                 } catch (Exception ex) {
                     out.println("<h2>Error parsing query string</h2>");
                 }
@@ -75,7 +94,30 @@ public class LoginServlet extends HttpServlet {
                     }
                 }
                 else {
-                    renderLogin(out, page);
+                    if (saveMode) {
+                        User user = new User(uid, pwd, dob, joined);
+
+                        if (addMode) {
+                            user = userMethods.addUser(user);
+                            out.println("<div>" + uid + " successfully added</div>");
+                        }
+                        else if (editMode) {
+                            user = userMethods.updateUser(user);
+                            out.println("<div>" + uid + " successfully updated</div>");
+                        }
+
+                        out.println("<div><a href=\"ActorServlet\">Back to main page</a></div>");
+                    }
+                    else if (addMode) {
+                        renderRegistration(out, null);
+                    }
+                    else if (editMode) {
+                        User user = userMethods.getUser(uid);
+                        renderRegistration(out, user);
+                    }
+                    else {
+                        renderLogin(out, page);
+                    }
                 }
             }
         }
@@ -85,6 +127,30 @@ public class LoginServlet extends HttpServlet {
         }
 
         out.println(HTMLUtils.renderClosingTags());
+    }
+
+    private void renderRegistration(PrintWriter out, User userToUpdate) {
+        if (userToUpdate != null) {
+            out.println("\t\t<form action=\"LoginServlet\" method=\"get\">");
+            out.println("\t\t\t<input type=\"hidden\" name=\"save\" value=\"true\" />");
+            out.println("\t\t\t<input type=\"hidden\" name=\"edit\" value=\"true\" />");
+            out.println("\t\t\t<input type=\"hidden\" name=\"joined\" value=\"" + userToUpdate.getDateJoined() + "\" />");
+            out.println("\t\t\t<div>User Name: <input type=\"text\" name=\"uid\" disabled=\"true\" value=\"" + userToUpdate.getUID() + "\" /></div>");
+            out.println("\t\t\t<div>Password: <input type=\"password\" name=\"password\" value=\"" + userToUpdate.getPassword() + "\" /></div>");
+            out.println("\t\t\t<div>DOB (YYYY-MM-DD): <input type=\"text\" name=\"dob\" value=\"" + userToUpdate.getDOB() + "\" /></div>");
+            out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"LoginServlet\">Cancel</a>");
+            out.println("\t\t</form>");
+        }
+        else {
+            out.println("\t\t<form action=\"LoginServlet\" method=\"get\">");
+            out.println("\t\t\t<input type=\"hidden\" name=\"save\" value=\"true\" />");
+            out.println("\t\t\t<input type=\"hidden\" name=\"add\" value=\"true\" />");
+            out.println("\t\t\t<div>User Name: <input type=\"text\" name=\"uid\" /></div>");
+            out.println("\t\t\t<div>Password: <input type=\"password\" name=\"password\" /></div>");
+            out.println("\t\t\t<div>DOB (YYYY-MM-DD): <input type=\"text\" name=\"dob\" /></div>");
+            out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"LoginServlet\">Cancel</a>");
+            out.println("\t\t</form>");
+        }
     }
 
     private void renderLogin(PrintWriter out, String returnPage) {
@@ -97,6 +163,17 @@ public class LoginServlet extends HttpServlet {
 
         out.println("<input type=\"submit\" />");
         out.println("</form>");
+
+        out.println("<a href=\"LoginServlet?add=true\">Register</a>");
+    }
+
+    private void resetValues() {
+        uid = "";
+        pwd = "";
+        page = "";
+        editMode = false;
+        addMode = false;
+        saveMode = false;
     }
 
     public void doPost(HttpServletRequest inRequest, HttpServletResponse outResponse) throws ServletException, IOException {
