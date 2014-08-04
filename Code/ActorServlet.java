@@ -311,7 +311,8 @@ public class ActorServlet extends HttpServlet {
 
     private void renderQuotes(PrintWriter out) {
         ArrayList quotes = actMethods.getQuotesByActor(aid);
-        int lastestQuote = 0;
+        int latestQuote = 0;
+
         if (quotes.size() > 0) {
             out.println("\t\t<h2>Quotes</h2>");
             out.println("\t\t<table>");
@@ -337,7 +338,7 @@ public class ActorServlet extends HttpServlet {
             out.println("\t\t</table>");
             latestQuote = ((Quote) quotes.get(quotes.size() - 1)).getQID();
         }
-        out.println("\t\t<div><a href=\"QuoteServlet?uid=" + uid + "&aid=" + aid + "&qid=" + quote.getQID() + "&add=true\">Add New Movie</a>");
+        out.println("\t\t<div><a href=\"QuoteServlet?uid=" + uid + "&aid=" + aid + "&add=true\">Add New Quote</a>");
     }
 
     private void renderAwards(PrintWriter out) {
