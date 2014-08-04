@@ -81,7 +81,7 @@ public class UserMethods {
             }
 
             String query = "UPDATE users SET pwd = '" + changedUser.getPassword() +
-                    "', to_date('" + df.format(changedUser.getDOB()) + "', 'MM/DD/YYYY')" +
+                    "', dob = to_date('" + df.format(changedUser.getDOB()) + "', 'MM/DD/YYYY')" +
                     " WHERE userid = '" + changedUser.getUID() + "'";
 
             DBUtils.executeUpdate(conn, query);

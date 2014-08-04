@@ -87,7 +87,6 @@ public class LoginServlet extends HttpServlet {
                     }
                     else if (editMode) {
                         user = userMethods.updateUser(user);
-                        out.println("<p>" + user.getPassword() + "</p>");
                         out.println("<div>" + uid + " successfully updated</div>");
                     }
 
