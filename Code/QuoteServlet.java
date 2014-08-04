@@ -167,6 +167,11 @@ public class QuoteServlet extends HttpServlet {
 	   }
 
        out.println("<div><b>Quote:</b> " + displayQuote.getQuote() + "</div>");
+       
+       if (uid.equals(""))
+           out.println("<div><a href=\"ActorServlet?aid=" + aid + "\">Back to Actor Page</a></div>");
+       else
+           out.println("<div><a href=\"ActorServlet?aid=" + aid + "&uid=" + uid + "\">Back to Actor Page</a></div>");
    }
 
    private void resetValues() {
