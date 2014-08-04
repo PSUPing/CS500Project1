@@ -55,7 +55,7 @@ public class TriviaMethods {
     */
    public Trivia addTrivia(Trivia newTrivia) {
        try {
-           int sid = 1 + DBUtils.getIntFromDB(conn, "SELECT MAX(nid) FROM trivia");
+           int sid = 1 + DBUtils.getIntFromDB(conn, "SELECT MAX(trvid) FROM trivia");
 
            String query = "INSERT INTO trivia (trvid, aid, trivia_text) VALUES (" + sid + ", " + newTrivia.getAID() +
                    ", '" + newTrivia.getTrivia() + "')";

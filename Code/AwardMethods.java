@@ -55,11 +55,20 @@ public class AwardMethods {
     */
    public Award addAward(Award newAward) {
        try {
+           String query = "";
            int sid = 1 + DBUtils.getIntFromDB(conn, "SELECT MAX(awid) FROM awards");
 
-           String query = "INSERT INTO awards (awid, aid, nomination_date, award_date) VALUES (" + sid + ", " + newAward.getAID() +
-                   ", to_date('" + df.format(newAward.getNominationDate()) + "', 'MM/DD/YYYY')" +
-                   ", to_date('" + df.format(newAward.getAwardDate()) + "', 'MM/DD/YYYY'))";
+           if (newAward.getAwardDate() != null) {
+               query = "INSERT INTO awards (awid, aid, nomination_date, award_date) VALUES (" + sid + ", " + newAward.getAID() +
+                       ", to_date('" + df.format(newAward.getNominationDate()) + "', 'MM/DD/YYYY')" +
+                       ", to_date('" + df.format(newAward.getAwardDate()) + "', 'MM/DD/YYYY'))";
+           }
+           else {
+               query = "INSERT INTO awards (awid, aid, nomination_date, award_date) VALUES (" + sid + ", " + newAward.getAID() +
+                       ", to_date('" + df.format(newAward.getNominationDate()) + "', 'MM/DD/YYYY')" +
+                       ", NULL)";
+           }
+
            DBUtils.executeUpdate(conn, query);
        } catch (SQLException sqlEx) {
            sqlEx.printStackTrace(System.err);
@@ -75,14 +84,23 @@ public class AwardMethods {
     */
    public Award updateAward(Award changedAward) {
        try {
+           String query = "";
            int cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM awards WHERE awid = " + changedAward.getAWID());
 
            if (cnt == 0)
                return changedAward;
 
-           String query = "UPDATE awards SET aid = " + changedAward.getAID() + ", nomination_date = to_date('" + df.format(changedAward.getNominationDate()) + "', 'MM/DD/YYYY')" +
-                   ", award_date = to_date('" + df.format(changedAward.getAwardDate()) + "', 'MM/DD/YYYY')" +
-                   " WHERE awid = " + changedAward.getAWID();
+           if (changedAward.getAwardDate() != null) {
+               query = "UPDATE awards SET aid = " + changedAward.getAID() + ", nomination_date = to_date('" + df.format(changedAward.getNominationDate()) + "', 'MM/DD/YYYY')" +
+                       ", award_date = to_date('" + df.format(changedAward.getAwardDate()) + "', 'MM/DD/YYYY')" +
+                       " WHERE awid = " + changedAward.getAWID();
+           }
+           else {
+               query = "UPDATE awards SET aid = " + changedAward.getAID() + ", nomination_date = to_date('" + df.format(changedAward.getNominationDate()) + "', 'MM/DD/YYYY')" +
+                       ", award_date = NULL" +
+                       " WHERE awid = " + changedAward.getAWID();
+           }
+
            DBUtils.executeUpdate(conn, query);
 
            query = "SELECT awid, nomination_date, aid, award_date FROM Awards WHERE awid = " + changedAward.getAWID();

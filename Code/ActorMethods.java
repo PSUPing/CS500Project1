@@ -137,7 +137,7 @@ public class ActorMethods {
             if (cnt == 0)
                 return rating;
 
-            String query = "UPDATE rating SET score = " + changedRating.getScore() + " WHERE tid = " + changedRating.getTID() +
+            String query = "UPDATE ratings SET score = " + changedRating.getScore() + " WHERE tid = " + changedRating.getTID() +
                     " AND aid = " + changedRating.getAID() + " AND userid = '" + changedRating.getUID() + "'";
             DBUtils.executeUpdate(conn, query);
 
@@ -149,7 +149,6 @@ public class ActorMethods {
 
             result.next();
             rating = new Rating(result.getInt("tid"), result.getInt("aid"), result.getString("userid"), result.getInt("score"));
-//            rating = new Rating(result.getInt("tid"), result.getInt("aid"), result.getString("userid"), result.getInt("score"));
 
             result.close();
             stmt.close();
@@ -301,8 +300,10 @@ public class ActorMethods {
         ArrayList ratedTitles = new ArrayList();
 
         try {
-            String query = "SELECT t.tid AS tid, name, genre, year, synopsis, title_type, role, score FROM titles t INNER JOIN Actors_Role_In ar ON (t.tid = ar.tid) " +
-                    " INNER JOIN ratings r ON (t.tid = r.tid) WHERE ar.aid = " + aid + " AND r.userid = '" + uid + "' ORDER BY title_type, name";
+            String query = "SELECT a.tid AS tid, name, genre, year, synopsis, title_type, role, score " +
+                            "FROM (SELECT t.tid AS tid, ar.aid AS aid, name, genre, year, synopsis, title_type, role " +
+                                 "FROM titles t INNER JOIN Actors_Role_In ar ON (t.tid = ar.tid) WHERE ar.aid = " + aid + ") a " +
+                                 "LEFT OUTER JOIN (SELECT aid, score FROM ratings WHERE userid = '" + uid + "') r ON (a.aid = r.aid)";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 

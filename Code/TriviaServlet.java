@@ -67,9 +67,7 @@ public class TriviaServlet extends HttpServlet {
                     else if (tempString[0].equals("add"))
                         addMode = Boolean.valueOf(tempString[1]).booleanValue();
                     else if (tempString[0].equals("trivia_text"))
-                        trivia_text = tempString[1];
-                    else if (tempString[0].equals("rating"))
-                        rating = Integer.parseInt(tempString[1]);
+                        trivia_text = HTMLUtils.cleanQString(tempString[1]);
                 } catch (Exception ex) {
                     out.println("<h2>Error parsing query string</h2>");
                 }
@@ -116,32 +114,29 @@ public class TriviaServlet extends HttpServlet {
     private void renderTriviaTextBoxes(PrintWriter out, Trivia triviaToUpdate) {
         if (triviaToUpdate != null) {
             out.println("\t\t<form action=\"TriviaServlet\" method=\"get\">");
-            out.println("\t\t\t<input type=\"hidden\" name=\"nid\" value=\"" + triviaToUpdate.getTriviaID() + "\" />");
+            out.println("\t\t\t<input type=\"hidden\" name=\"trvid\" value=\"" + triviaToUpdate.getTriviaID() + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"aid\" value=\"" + aid + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
-            out.println("\t\t\t<input type=\"hidden\" name=\"tid\" value=\"" + tid + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"save\" value=\"true\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"edit\" value=\"true\" />");
             out.println("\t\t\t<div>Trivia: <input type=\"text\" name=\"trivia_text\" value=\"" + triviaToUpdate.getTrivia() + "\" /></div>");
             out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"TriviaServlet?trvid=" + triviaToUpdate.getTriviaID() +
-                    "&aid=" + aid + "&tid=" + tid + "&uid=" + uid + "\">Cancel</a>");
+                    "&aid=" + aid + "&uid=" + uid + "\">Cancel</a>");
             out.println("\t\t</form>");
         }
         else {
             out.println("\t\t<form action=\"TriviaServlet\" method=\"get\">");
             out.println("\t\t\t<input type=\"hidden\" name=\"aid\" value=\"" + aid + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
-            out.println("\t\t\t<input type=\"hidden\" name=\"tid\" value=\"" + tid + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"save\" value=\"true\" />");
-            out.println("\t\t\t<input type=\"hidden\" name=\"edit\" value=\"true\" />");
-            out.println("\t\t\t<div>Trivia Source: <input type=\"text\" name=\"trivia_source\" /></div>");
-            out.println("\t\t\t<div>Trivia Url: <input type=\"text\" name=\"trivia_url\" /></div>");
+            out.println("\t\t\t<input type=\"hidden\" name=\"add\" value=\"true\" />");
+            out.println("\t\t\t<div>Trivia: <input type=\"text\" name=\"trivia_text\" /></div>");
 
             if (trvid > -1)
                 out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"TriviaServlet?trvid=" + triviaToUpdate.getTriviaID() +
-                        "&aid=" + aid + "&tid=" + tid + "&uid=" + uid + "\">Cancel</a>");
+                        "&aid=" + aid + "&uid=" + uid + "\">Cancel</a>");
             else
-                out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"TriviaServlet?aid=" + aid + "&tid=" + tid + "&uid=" + uid + "\">Cancel</a>");
+                out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"TriviaServlet?aid=" + aid + "&uid=" + uid + "\">Cancel</a>");
 
             out.println("\t\t</form>");
         }

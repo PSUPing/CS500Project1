@@ -88,12 +88,18 @@ public class AwardServlet extends HttpServlet {
             if (saveMode) {
                 Award award = new Award(awid, aid, nomination_date, award_date);
 
-                if (editMode)
-                    award = awardMethods.updateAward(award);
-                else if (addMode)
-                    award = awardMethods.addAward(award);
+                if (nomination_date == null) {
+                    out.println("<h3>You must specify a nomination date</h3>");
+                    renderAwardTextBoxes(out, award);
+                }
+                else {
+                    if (editMode)
+                        award = awardMethods.updateAward(award);
+                    else if (addMode)
+                        award = awardMethods.addAward(award);
 
-                renderAward(out, award);
+                    renderAward(out, award);
+                }
             }
             else if (addMode) {
                 renderAwardTextBoxes(out, null);

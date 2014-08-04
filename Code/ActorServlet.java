@@ -100,18 +100,14 @@ public class ActorServlet extends HttpServlet {
                     Rating rating = new Rating(aid, tid, uid, uRating);
 
                     if (actMethods.hasActorTitleRating(rating)) {
-                        out.println("<p>Got here</p>");
                         if (uRating == 0) {
-                            out.println("<p>Rating 0</p>");
                             actMethods.removeActorTitleRating(rating);
                         }
                         else {
-                            out.println("<p>Rating != 0</p>");
                             actMethods.updateRating(rating);
                         }
                     }
                     else {
-                        out.println("<p>No Rating</p>");
                         actMethods.addActorTitleRating(rating);
                     }
 
