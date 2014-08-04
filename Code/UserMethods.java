@@ -53,15 +53,10 @@ public class UserMethods {
      */
     public User addUser(User newUser) {
         try {
-            /* TODO: For some reason every variant of grabbing the current date
-             * (Calendar.getInstance() and new Date()) caused errors for some reason
-             * ideally this would be a current date and time
-             */
             String query = "INSERT INTO users (userid, pwd, dob, date_joined) VALUES ('" +
                     newUser.getUID() + "', '" + newUser.getPassword() +
                     "', to_date('" + df.format(newUser.getDOB()) + "', 'MM/DD/YYYY')" +
-                    "', to_date('2014-08-05', 'MM/DD/YYYY'))";
-            newUser.setPassword(query);
+                    ", to_date('" + df.format(new Date()) + "', 'MM/DD/YYYY'))";
             DBUtils.executeUpdate(conn, query);
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace(System.err);
@@ -76,20 +71,21 @@ public class UserMethods {
      * @return
      */
     public User updateUser(User changedUser) {
-        User user  = null;
+        User user = null;
 
         try {
-            int cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM users WHERE userid = '" + changedUser.getUID());
+            int cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM users WHERE userid = '" + changedUser.getUID() + "'");
 
-            if (cnt == 0)
+            if (cnt == 0) {
                 return user;
+            }
 
             String query = "UPDATE users SET pwd = '" + changedUser.getPassword() +
                     "', to_date('" + df.format(changedUser.getDOB()) + "', 'MM/DD/YYYY')" +
-                    " WHERE userid = '" + changedUser.getUID();
-            DBUtils.executeUpdate(conn, query);
+                    " WHERE userid = '" + changedUser.getUID() + "'";
 
-            query = "SELECT userid, pwd, dob, date_joined FROM users WHERE userid = '" + changedUser.getUID();
+            DBUtils.executeUpdate(conn, query);
+            query = "SELECT userid, pwd, dob, date_joined FROM users WHERE userid = '" + changedUser.getUID() +"'";
 
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
