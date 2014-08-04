@@ -29,7 +29,7 @@ public class HTMLUtils {
     }
 
     public static String cleanQString(String stringToClean) {
-        return stringToClean.replace('+', ' ').replaceAll("%3A", ":").replaceAll("%20", " ");
+        return stringToClean.replace('+', ' ').replaceAll("%2F", "/").replaceAll("%3A", ":").replaceAll("%20", " ").replaceAll("%2F", "/");
     }
 
     public static String renderClosingTags() {
