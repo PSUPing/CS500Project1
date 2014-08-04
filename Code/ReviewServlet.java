@@ -108,8 +108,10 @@ public class ReviewServlet extends HttpServlet {
                 }
             }
             else {
-                if (revid > -1)
-                    renderReview(out, reviewMethods.getReview(revid));
+                if (revid > -1) {
+                    Review review = reviewMethods.getReview(revid);
+                    renderReview(out, review);
+                }
             }
         }
 
@@ -161,7 +163,7 @@ public class ReviewServlet extends HttpServlet {
 
         out.println("<div><b>Review: </b> " + displayReview.getReviewText() + "</div>");
         out.println("<div><b>Score: </b> " + displayReview.getScore() + "</div>");
-        out.println("<div><b>Review Source: </b> " + displayReview.getReviewSource() + "</div>");
+        out.println("<div><b>Review Source: </b> " + displayReview.getReviewSource() + "</div><br />");
 
         if (uid.equals(""))
             out.println("<div><a href=\"TitleServlet?aid=" + aid + "&tid=" + tid + "\">Back to Title Page</a></div>");

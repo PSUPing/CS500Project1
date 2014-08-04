@@ -44,6 +44,14 @@ UPDATE Actors_Role_In SET role = 'Dale Dixon' WHERE aid = 3 AND tid = 2;
 SELECT aid, tid, role FROM Actors_Role_In;
 SELECT aid, tid, role FROM Actors_Role_In WHERE aid = 3 AND tid = 2;
 
+-- Quotes
+
+INSERT INTO quotes VALUES (1, 'I think we just found a Transformer', 1);
+INSERT INTO quotes VALUES (2, 'Merill!', 3);
+INSERT INTO quotes VALUES (3, 'Dinobots Transform!', 2);
+
+UPDATE quotes SET qt = ''
+
 -- Ratings
 
 INSERT INTO ratings VALUES (3, 3, 'psuping', 4);

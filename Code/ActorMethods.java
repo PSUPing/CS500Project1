@@ -70,6 +70,23 @@ public class ActorMethods {
     }
 
     /**
+     * Create a new user rating in the database.
+     * @param addRating
+     * @return
+     */
+    public Rating addActorTitleRating(Rating addRating) {
+        try {
+            String query = "INSERT INTO ratings (aid, tid, userid, score) VALUES (" + addRating.getAID() + ", " + addRating.getTID() +
+                    ", '" + addRating.getUID() + "', " + addRating.getScore() + ")";
+            DBUtils.executeUpdate(conn, query);
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+
+        return addRating;
+    }
+
+    /**
      * Update an new actor in the database.
      * @param changedActor
      * @return
@@ -103,6 +120,74 @@ public class ActorMethods {
         }
 
         return actor;
+    }
+
+    /**
+     * Update a user rating in the database.
+     * @param changedTitle
+     * @return
+     */
+    public Rating updateRating(Rating changedRating) {
+        Rating rating = null;
+
+        try {
+            int cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM ratings WHERE tid = " + changedRating.getTID() +
+                    " AND aid = " + changedRating.getAID() + " AND userid = '" + changedRating.getUID() + "'");
+
+            if (cnt == 0)
+                return rating;
+
+            String query = "UPDATE rating SET score = " + changedRating.getScore() + " WHERE tid = " + changedRating.getTID() +
+                    " AND aid = " + changedRating.getAID() + " AND userid = '" + changedRating.getUID() + "'";
+            DBUtils.executeUpdate(conn, query);
+
+            query = "SELECT tid, aid, userid, score FROM rating WHERE tid = " + changedRating.getTID() +
+                    " AND aid = " + changedRating.getAID() + " AND userid = '" + changedRating.getUID() + "'";
+
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            result.next();
+            rating = new Rating(result.getInt("tid"), result.getInt("aid"), result.getString("userid"), result.getInt("score"));
+//            rating = new Rating(result.getInt("tid"), result.getInt("aid"), result.getString("userid"), result.getInt("score"));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+
+        return rating;
+    }
+
+    /**
+     * Create a new user rating in the database.
+     * @param removeRating
+     */
+    public void removeActorTitleRating(Rating removeRating) {
+        try {
+            String query = "DELETE FROM ratings WHERE aid = " + removeRating.getAID() + " AND tid = " + removeRating.getTID() +
+                    " AND userid = '" + removeRating.getUID() + "'";
+            DBUtils.executeUpdate(conn, query);
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+    }
+
+    public boolean hasActorTitleRating(Rating ratingQuery) {
+        int cnt = 0;
+
+        try {
+            cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM ratings WHERE aid = " + ratingQuery.getAID() + " AND tid = " + ratingQuery.getTID() +
+                    " AND userid = '" + ratingQuery.getUID() + "'");
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+
+        if (cnt == 0)
+            return false;
+        else
+            return true;
     }
 
     /**
@@ -179,5 +264,85 @@ public class ActorMethods {
         }
 
         return actors;
+    }
+
+    /**
+     * Grab the titles for an Actor and their role in that title.
+     * @param aid
+     * @return
+     */
+    public ArrayList getTitlesAndRole(int aid) {
+        ArrayList extendedTitles = new ArrayList();
+
+        try {
+            String query = "SELECT t.tid AS tid, name, genre, year, synopsis, title_type, role FROM titles t INNER JOIN Actors_Role_In ar ON (t.tid = ar.tid) WHERE ar.aid = " +
+                    aid + " ORDER BY title_type, name";
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            while (result.next())
+                extendedTitles.add(new TitleActorRole(result.getInt("tid"), result.getString("name"), result.getString("genre"),
+                        result.getInt("year"), result.getString("synopsis"), result.getString("title_type"), result.getString("role")));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace(System.err);
+        }
+
+        return extendedTitles;
+    }
+
+    /**
+     * Grab the titles for an Actor, their role in that title and the users rating.
+     * @return
+     */
+    public ArrayList getTitlesAndUserRating(int aid, String uid) {
+        ArrayList ratedTitles = new ArrayList();
+
+        try {
+            String query = "SELECT t.tid AS tid, name, genre, year, synopsis, title_type, role, score FROM titles t INNER JOIN Actors_Role_In ar ON (t.tid = ar.tid) " +
+                    " INNER JOIN ratings r ON (t.tid = r.tid) WHERE ar.aid = " + aid + " AND r.userid = '" + uid + "' ORDER BY title_type, name";
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            while (result.next())
+                ratedTitles.add(new ActorTitleRating(result.getInt("tid"), result.getString("name"), result.getString("genre"),
+                        result.getInt("year"), result.getString("synopsis"), result.getString("title_type"), result.getString("role"),
+                        uid, result.getInt("score")));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace(System.err);
+        }
+
+        return ratedTitles;
+    }
+
+    /**
+     * Get actor quotes from the database by the actor ID.
+     * @param aid
+     * @return
+     */
+    public ArrayList getQuotesByActor(int aid) {
+        ArrayList quotes = new ArrayList();
+
+        try {
+            String query = "SELECT qid, qt, aid FROM quotes WHERE aid = " + aid;
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            // A loop may not be needed, but it will ensure that actor is null if there is no result
+            while (result.next())
+                quotes.add(new Quote(result.getInt("qid"), result.getInt("aid"), result.getString("qt")));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+
+        return quotes;
     }
 }

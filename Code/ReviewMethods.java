@@ -116,7 +116,7 @@ public class ReviewMethods {
             ResultSet result = stmt.executeQuery(query);
 
             result.next();
-            review = new Review(result.getInt("revid"), result.getInt("tid"), result.getInt("score"), result.getString("rs"), result.getString("rt"));
+            review = new Review(result.getInt("revid"), result.getInt("tid"), result.getInt("rating"), result.getString("rs"), result.getString("rt"));
 
             result.close();
             stmt.close();
@@ -125,30 +125,5 @@ public class ReviewMethods {
         }
 
         return review;
-    }
-
-    /**
-     * Get a review from the database by the title ID.
-     * @param tid
-     * @return
-     */
-    public ArrayList getReivewByTitle(int tid) {
-        ArrayList reviews = new ArrayList();
-
-        try {
-            String query = "SELECT revid, rating, tid, rs, rt FROM reviews WHERE tid = " + tid;
-            Statement stmt = conn.createStatement();
-            ResultSet result = stmt.executeQuery(query);
-
-            while (result.next())
-                reviews.add(new Review(result.getInt("revid"), result.getInt("tid"), result.getInt("rating"), result.getString("rs"), result.getString("rt")));
-
-            result.close();
-            stmt.close();
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace(System.err);
-        }
-
-        return reviews;
     }
 }

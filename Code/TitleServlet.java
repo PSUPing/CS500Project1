@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 public class TitleServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TitleMethods titleMethods;
-    private ReviewMethods reviewMethods;
     private ResourceBundle bundle;
     private String message;
 
@@ -35,7 +34,6 @@ public class TitleServlet extends HttpServlet {
     public void init() throws ServletException {
         bundle = ResourceBundle.getBundle("OraBundle");
         titleMethods = new TitleMethods();
-        reviewMethods = new ReviewMethods();
         message = titleMethods.openDBConnection(bundle.getString("dbUser"), bundle.getString("dbPass"), bundle.getString("dbSID"),
                 bundle.getString("dbHost"), Integer.parseInt(bundle.getString("dbPort")));
     }
@@ -159,8 +157,7 @@ public class TitleServlet extends HttpServlet {
     }
 
     private void renderTitleReviews(PrintWriter out) {
-        reviewMethods.setConn(titleMethods.getConn());
-        ArrayList reviews = reviewMethods.getReivewByTitle(tid);
+        ArrayList reviews = titleMethods.getReivewByTitle(tid);
 
         if (reviews.size() > 0) {
             out.println("\t\t<h2>Title Reviews</h2>");
@@ -178,9 +175,9 @@ public class TitleServlet extends HttpServlet {
                 out.println("\t\t\t<tr>");
 
                 if (uid.equals(""))
-                    out.println("\t\t\t\t<td><a href=\"ReviewServlet?tid=" + tid + "&revid=" + review.getRevID() + "\">View</a></td>");
+                    out.println("\t\t\t\t<td><a href=\"ReviewServlet?tid=" + tid + "&aid=" + aid + "&revid=" + review.getRevID() + "\">View</a></td>");
                 else
-                    out.println("\t\t\t\t<td><a href=\"ReviewServlet?tid=" + tid + "&uid=" + uid + "&revid=" + review.getRevID() + "\">View</a></td>");
+                    out.println("\t\t\t\t<td><a href=\"ReviewServlet?tid=" + tid + "&aid=" + aid + "&uid=" + uid + "&revid=" + review.getRevID() + "\">View</a></td>");
 
                 out.println("\t\t\t\t<td>" + review.getReviewSource() + "</td>");
                 out.println("\t\t\t\t<td>" + review.getReviewText() + "</td>");
@@ -207,12 +204,12 @@ public class TitleServlet extends HttpServlet {
 
         out.println("\t\t<br /><br />");
 
-        out.println("<div><a href=\"javascript:history.go(-1)\">Back to Actor Page</a>"); //<a href=\"ActorServlet?aid=" + aid + "\">Back to Actor Page</a></div>");
-
-/*        if (uid.equals(""))
-            out.println("<div><a href=\"javascript:history.go(-1)\">Back to Actor Page</a>"); //<a href=\"ActorServlet?aid=" + aid + "\">Back to Actor Page</a></div>");
+        if (uid.equals(""))
+            out.println("<div><a href=\"ActorServlet?aid=" + aid + "\">Back to Actor Page</a></div>");
         else
-            out.println("<div><a href=\"ActorServlet?aid=" + aid + "&uid=" + uid + "\">Back to Actor Page</a></div>");*/
+            out.println("<div><a href=\"ActorServlet?aid=" + aid + "&uid=" + uid + "\">Back to Actor Page</a></div>");
+
+        out.println("<div><a href=\"ActorServlet\">Back to Main Page</a></div>");//<a href="javascript:history.go(-1)">Back to Actor Page</a>"); //
     }
 
     private void resetValues() {

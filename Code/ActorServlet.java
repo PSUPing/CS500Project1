@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 public class ActorServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ActorMethods actMethods;
-    private TitleMethods titleMethods;
     private ResourceBundle bundle;
     private String message;
 
@@ -34,7 +33,6 @@ public class ActorServlet extends HttpServlet {
     public void init() throws ServletException {
         bundle = ResourceBundle.getBundle("OraBundle");
         actMethods = new ActorMethods();
-        titleMethods = new TitleMethods();
         message = actMethods.openDBConnection(bundle.getString("dbUser"), bundle.getString("dbPass"), bundle.getString("dbSID"),
                 bundle.getString("dbHost"), Integer.parseInt(bundle.getString("dbPort")));
     }
@@ -101,14 +99,14 @@ public class ActorServlet extends HttpServlet {
                 else {
                     Rating rating = new Rating(aid, tid, uid, uRating);
 
-                    if (titleMethods.hasActorTitleRating(rating)) {
+                    if (actMethods.hasActorTitleRating(rating)) {
                         if (uRating == 0)
-                            titleMethods.removeActorTitleRating(rating);
+                            actMethods.removeActorTitleRating(rating);
                         else
-                            titleMethods.updateRating(rating);
+                            actMethods.updateRating(rating);
                     }
                     else
-                        titleMethods.addActorTitleRating(rating);
+                        actMethods.addActorTitleRating(rating);
 
                     Actor actor = actMethods.getActor(aid);
                     renderActor(out, actor);
@@ -225,13 +223,12 @@ public class ActorServlet extends HttpServlet {
     }
 
     private void renderActorTitles(PrintWriter out) {
-        titleMethods.setConn(actMethods.getConn());
         ArrayList titles = new ArrayList();
 
         if (!uid.equals(""))
-            titles = titleMethods.getTitlesAndUserRating(aid, uid);
+            titles = actMethods.getTitlesAndUserRating(aid, uid);
         else
-            titles = titleMethods.getTitlesAndRole(aid);
+            titles = actMethods.getTitlesAndRole(aid);
 
         if (titles.size() > 0) {
             out.println("\t\t<h2>Titles Stared In</h2>");
@@ -304,6 +301,37 @@ public class ActorServlet extends HttpServlet {
         }
     }
 
+    private void renderQuotes(PrintWriter out) {
+        ArrayList quotes = actMethods.getQuotesByActor(aid);
+
+//        out.println("<p>" + quotes.size() + "</p>");
+
+        if (quotes.size() > 0) {
+            out.println("\t\t<h2>Actor Quotes</h2>");
+            out.println("\t\t<table>");
+            out.println("\t\t\t<tr>");
+            out.println("\t\t\t\t<td><b></b></td>");
+            out.println("\t\t\t\t<td><b>Quote</b></td>");
+            out.println("\t\t\t</tr>");
+
+            for (int i = 0; i < quotes.size(); i++) {
+                Quote quote = (Quote) quotes.get(i);
+
+                out.println("\t\t\t<tr>");
+
+                if (uid.equals(""))
+                    out.println("\t\t\t\t<td><a href=\"QuoteServlet?aid=" + aid + "&qid=" + quote.getQID() + "\">View</a></td>");
+                else
+                    out.println("\t\t\t\t<td><a href=\"QuoteServlet?aid=" + aid + "&uid=" + uid + "&qid=" + quote.getQID() + "\">View</a></td>");
+
+                out.println("\t\t\t\t<td>" + quote.getQuote() +"</td>");
+                out.println("\t\t\t</tr>");
+            }
+
+            out.println("\t\t</table>");
+        }
+    }
+
     private void renderActor(PrintWriter out, Actor displayActor) {
         if (!uid.equals("")) {
             out.println("\t\t<div style=\"text-align:right\"><a href=\"ActorServlet?uid=" + uid + "&aid=" + displayActor.getAID() + "&add=true\">Add</a> " +
@@ -324,6 +352,7 @@ public class ActorServlet extends HttpServlet {
         out.println("<div><b>Short Bio:</b> " + displayActor.getBio() + "</div>");
 
         renderActorTitles(out);
+        renderQuotes(out);
     }
 
     private void resetValues() {
