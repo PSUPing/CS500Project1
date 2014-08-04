@@ -21,14 +21,15 @@ public class HTMLUtils {
             if (userName.equals(""))
                 header += "\t\t<div style=\"text-align:right\"><a href=\"LoginServlet?page=" + servletName + "\">Login</a></div>\n";
             else
-                header += "\t\t<div style=\"text-align:right\">User: " + userName +" <a href=\"" + servletName + "\">Logout</a></div>\n";
+                header += "\t\t<div style=\"text-align:right\">User: <a href=\"LoginServlet?uid=" + userName + "&edit=true\">" + userName +
+                        " <a href=\"" + servletName + "\">Logout</a></div>\n";
         }
 
         return header;
     }
 
     public static String cleanQString(String stringToClean) {
-        return stringToClean.replace('+', ' ').replaceAll("%3A", ":");
+        return stringToClean.replace('+', ' ').replaceAll("%3A", ":").replaceAll("%20", " ");
     }
 
     public static String renderClosingTags() {
