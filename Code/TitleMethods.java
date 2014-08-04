@@ -217,7 +217,7 @@ public class TitleMethods {
 
         try {
             int cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM ratings WHERE tid = " + changedRating.getTID() +
-                " AND aid = " + changedRating.getAID() + " AND userid = '" + changedRating.getUID() + "'");
+                    " AND aid = " + changedRating.getAID() + " AND userid = '" + changedRating.getUID() + "'");
 
             if (cnt == 0)
                 return rating;
@@ -331,13 +331,13 @@ public class TitleMethods {
 
         try {
             String query = "SELECT t.tid AS tid, name, genre, year, synopsis, title_type, role FROM titles t INNER JOIN Actors_Role_In ar ON (t.tid = ar.tid) WHERE ar.aid = " +
-                            aid + " ORDER BY title_type, name";
+                    aid + " ORDER BY title_type, name";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next())
-                extendedTitles.add(new TitleActorRole(result.getInt("tid"), result.getString("name"), result.getString("genre"), 
-                    result.getInt("year"), result.getString("synopsis"), result.getString("title_type"), result.getString("role")));
+                extendedTitles.add(new TitleActorRole(result.getInt("tid"), result.getString("name"), result.getString("genre"),
+                        result.getInt("year"), result.getString("synopsis"), result.getString("title_type"), result.getString("role")));
 
             result.close();
             stmt.close();

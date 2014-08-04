@@ -12,25 +12,25 @@ drop table Titles;
 
 create table Users (
 	userID varchar(24) primary key,
-	pwd varchar(128),
+	pwd varchar(128) not null,
 	dob date,
 	date_joined date
 );
 
 create table Actors(
 	AID number primary key,
-	name varchar(128),
+	name varchar(128) not null,
 	dob date,
 	bio varchar(600)
 );
 
 create table Titles(
 	TID number primary key,
-	name varchar(128),
+	name varchar(128) not null,
 	genre varchar(128),
-	year number,
+	year number not null,
 	synopsis varchar(600),
-	title_type varchar(50)
+	title_type varchar(50) not null
 );
 
 create table Actors_Role_In(
@@ -46,7 +46,7 @@ create table Ratings(
 	AID number,
 	TID number,
 	userID varchar(24),
-	score number,
+	score number not null,
 	primary key (AID, TID, userID),
 	foreign key (TID) references Titles(TID),
 	foreign key (AID) references Actors(AID),
@@ -64,7 +64,7 @@ create table Reviews(
 
 create table Quotes(
 	QID number primary key,
-	qt varchar(500), --quote text
+	qt varchar(500) not null, --quote text
 	AID number,
 	foreign key (AID) references Actors(AID)
 );
