@@ -59,7 +59,7 @@ public class User {
         userDOB = dob;
     }
 
-    public void setBio(java.sql.Date joined) {
+    public void setDateJoined(java.sql.Date joined) {
         userJoined = joined;
     }
 
