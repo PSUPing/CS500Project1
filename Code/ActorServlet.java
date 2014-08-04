@@ -375,6 +375,7 @@ public class ActorServlet extends HttpServlet {
 
             out.println("\t\t</table>");
         }
+        out.println("\t\t<div><a href=\"AwardServlet?uid=" + uid + "&aid=" + aid + "&add=true\">Add New Award</a>");
     }
 
     private void renderTrivia(PrintWriter out) {
@@ -404,6 +405,7 @@ public class ActorServlet extends HttpServlet {
 
             out.println("\t\t</table>");
         }
+        out.println("\t\t<div><a href=\"TriviaServlet?uid=" + uid + "&aid=" + aid + "&add=true\">Add New Trivia</a>");
     }
 
     private void renderNews(PrintWriter out) {
@@ -435,6 +437,7 @@ public class ActorServlet extends HttpServlet {
 
             out.println("\t\t</table>");
         }
+        out.println("\t\t<div><a href=\"NewsServlet?uid=" + uid + "&aid=" + aid + "&add=true\">Add New News</a>");
     }
 
     private void renderActor(PrintWriter out, Actor displayActor) {
