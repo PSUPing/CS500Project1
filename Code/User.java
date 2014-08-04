@@ -68,8 +68,8 @@ public class User {
     public String toString() {
         return "(UID: " + userID + 
                 ") Password: " + userPwd + 
-                " DOB: " + df.format(userDOB) + 
-                " Date Joined: " + df.format(userJoined);
+                " DOB: " + userDOB +
+                " Date Joined: " + userJoined;
     }
 
     public String toViewHTML() {
