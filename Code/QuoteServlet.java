@@ -100,11 +100,14 @@ public class QuoteServlet extends HttpServlet {
             if (saveMode) {
                 Quote quote = new Quote(qid, aid, qt);
 
-                if (editMode)
+                if (editMode){
                     quote = quoteMethods.updateQuote(quote);
-                else if (addMode)
+                	out.println("<div>" + quote.getQuote() + " successfully added</div>");
+                }
+                else if (addMode){
                     quote = quoteMethods.addQuote(quote);
-
+                	out.println("<div>" + quote.getQuote() + " successfully added</div>");
+                }
                 renderQuote(out, quote);
             }
             else if (addMode) {
@@ -134,28 +137,26 @@ public class QuoteServlet extends HttpServlet {
             out.println("\t\t\t<input type=\"hidden\" name=\"revid\" value=\"" + quoteToUpdate.getQID() + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"aid\" value=\"" + aid + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
-            out.println("\t\t\t<input type=\"hidden\" name=\"tid\" value=\"" + tid + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"save\" value=\"true\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"edit\" value=\"true\" />");
             out.println("\t\t\t<div>Quote: <input type=\"text\" name=\"qt\" value=\"" + quoteToUpdate.getQuote() + "\" /></div>");
             out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"QuoteServlet?qid=" + quoteToUpdate.getQID() +
-                    "&aid=" + aid + "&tid=" + tid + "&uid=" + uid + "\">Cancel</a>");
+                    "&aid=" + aid + "&uid=" + uid + "\">Cancel</a>");
             out.println("\t\t</form>");
         }
         else {
             out.println("\t\t<form action=\"QuoteServlet\" method=\"get\">");
             out.println("\t\t\t<input type=\"hidden\" name=\"aid\" value=\"" + aid + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
-            out.println("\t\t\t<input type=\"hidden\" name=\"tid\" value=\"" + tid + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"save\" value=\"true\" />");
-            out.println("\t\t\t<input type=\"hidden\" name=\"edit\" value=\"true\" />");
+            out.println("\t\t\t<input type=\"hidden\" name=\"add\" value=\"true\" />");
             out.println("\t\t\t<div>Quote: <input type=\"text\" name=\"qt\" /></div>");
 
             if (qid > -1)
                 out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"QuoteServlet?qid=" + quoteToUpdate.getQID() +
-                        "&aid=" + aid + "&tid=" + tid + "&uid=" + uid + "\">Cancel</a>");
+                        "&aid=" + aid + "&uid=" + uid + "\">Cancel</a>");
             else
-                out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"QuoteServlet?aid=" + aid + "&tid=" + tid + "&uid=" + uid + "\">Cancel</a>");
+                out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"QuoteServlet?aid=" + aid + "&uid=" + uid + "\">Cancel</a>");
 
             out.println("\t\t</form>");
         }
