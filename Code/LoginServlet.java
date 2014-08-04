@@ -28,8 +28,6 @@ public class LoginServlet extends HttpServlet {
     private boolean addMode = false;
     private boolean saveMode = false;
 
-    private java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); // Used for outputting the date
-
     public void init() throws ServletException {
         bundle = ResourceBundle.getBundle("OraBundle");
         userMethods = new UserMethods();
@@ -85,7 +83,6 @@ public class LoginServlet extends HttpServlet {
 
                     if (loggedIn != null) {
                         out.println("<div>You have successfully logged in.</div><br /><br />");
-                        out.println("<div><a href=\"" + page + "?uid=" + uid + "\">Return to previous page</a></div><br />");
                         out.println("<div><a href=\"ActorServlet?uid=" + uid + "\">Go to Main Page</a></div><br />");
                     }
                     else {
