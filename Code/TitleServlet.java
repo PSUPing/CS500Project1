@@ -206,10 +206,12 @@ public class TitleServlet extends HttpServlet {
         renderTitleReviews(out);
         out.println("\t\t<br /><br />");
 
-        if (uid.equals(""))
-            out.println("<div><a href=\"ActorServlet?aid=" + aid + "\">Back to Actor Page</a></div>");
+        out.println("<div><a href=\"javascript:history.go(-1)\">Back to Actor Page</a>"); //<a href=\"ActorServlet?aid=" + aid + "\">Back to Actor Page</a></div>");
+
+/*        if (uid.equals(""))
+            out.println("<div><a href=\"javascript:history.go(-1)\">Back to Actor Page</a>"); //<a href=\"ActorServlet?aid=" + aid + "\">Back to Actor Page</a></div>");
         else
-            out.println("<div><a href=\"ActorServlet?aid=" + aid + "&uid=" + uid + "\">Back to Actor Page</a></div>");
+            out.println("<div><a href=\"ActorServlet?aid=" + aid + "&uid=" + uid + "\">Back to Actor Page</a></div>");*/
     }
 
     private void resetValues() {
