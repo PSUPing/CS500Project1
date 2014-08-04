@@ -45,7 +45,7 @@ create table Actors_Role_In(
 create table Ratings(
 	AID number,
 	TID number,
-	userID varchar(24),
+	userID varchar(24) not null,
 	score number not null,
 	primary key (AID, TID, userID),
 	foreign key (TID) references Titles(TID),
@@ -56,7 +56,7 @@ create table Ratings(
 create table Reviews(
 	RevID number primary key,
 	rating number,
-	TID number,
+	TID number not null,
 	rs varchar(512), --review source
 	rt varchar(1024), --review text
 	foreign key (TID) references Titles(TID)
@@ -65,20 +65,20 @@ create table Reviews(
 create table Quotes(
 	QID number primary key,
 	qt varchar(500) not null, --quote text
-	AID number,
+	AID number not null,
 	foreign key (AID) references Actors(AID)
 );
 
 create table Trivia(
 	TrvID number primary key,
-	AID number,
+	AID number not null,
 	trivia_text varchar(1024),
 	foreign key (AID) references Actors(AID)
 );
 
 create table Awards(
 	AwID number primary key,
-	AID number,
+	AID number not null,
 	nomination_date date,
 	award_date date,
 	foreign key (AID) references Actors(AID)
@@ -86,7 +86,7 @@ create table Awards(
 
 create table News(
 	NID number primary key,
-	AID number,
+	AID number not null,
 	news_source varchar(128),
 	news_url varchar(512),
 	foreign key (AID) references Actors(AID)
