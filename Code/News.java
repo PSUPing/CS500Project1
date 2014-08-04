@@ -23,37 +23,37 @@ public class News {
 
     /********** Getters **********/
 
-    public int getRevID() {
+    public int getNID() {
         return newsID;
     }
-
-    public int getTID() {
+  
+    public int getAID() {
         return actorID;
     }
 
-    public String getReviewSource() {
+    public String getNewsSource() {
         return newsSrc;
     }
 
-    public String getReviewText() {
+    public String getNewsURL() {
         return newsURL;
     }
 
     /********** Setters **********/
 
-    public void setRevID(int nid) {
+    public void setNID(int nid) {
         newsID = nid;
     }
 
-    public void setTID(int aid) {
+    public void setAID(int aid) {
         actorID = aid;
     }
 
-    public void setReviewSource(String src) {
+    public void setNewsSource(String src) {
         newsSrc = src;
     }
 
-    public void setGenre(String url) {
+    public void setNewsURL(String url) {
         newsURL = url;
     }
 
