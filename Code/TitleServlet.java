@@ -178,9 +178,9 @@ public class TitleServlet extends HttpServlet {
                 out.println("\t\t\t<tr>");
 
                 if (uid.equals(""))
-                    out.println("\t\t\t\t<td><a href=\"ReviewServlet?tid=" + tid + "&revid=" + "\">View</a></td>");
+                    out.println("\t\t\t\t<td><a href=\"ReviewServlet?tid=" + tid + "&revid=" + review.getRevID() + "\">View</a></td>");
                 else
-                    out.println("\t\t\t\t<td><a href=\"ReviewServlet?tid=" + tid + "&uid=" + uid + "&revid=" + "\">View</a></td>");
+                    out.println("\t\t\t\t<td><a href=\"ReviewServlet?tid=" + tid + "&uid=" + uid + "&revid=" + review.getRevID() + "\">View</a></td>");
 
                 out.println("\t\t\t\t<td>" + review.getReviewSource() + "</td>");
                 out.println("\t\t\t\t<td>" + review.getReviewText() + "</td>");
@@ -204,6 +204,7 @@ public class TitleServlet extends HttpServlet {
         out.println("<div><b>Title Type: </b> " + displayTitle.getTitleType() + "</div>");
 
         renderTitleReviews(out);
+
         out.println("\t\t<br /><br />");
 
         out.println("<div><a href=\"javascript:history.go(-1)\">Back to Actor Page</a>"); //<a href=\"ActorServlet?aid=" + aid + "\">Back to Actor Page</a></div>");
