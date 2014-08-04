@@ -80,9 +80,9 @@ public class AwardMethods {
            if (cnt == 0)
                return changedAward;
 
-           String query = "UPDATE Award SET aid = " + changedAward.getAID() + ", nomination_date = " + changedAward.getNominationDate() +
-                   ", award_date = '" + changedAward.getAwardDate() +
-                   "' WHERE awid = " + changedAward.getAWID();
+           String query = "UPDATE awards SET aid = " + changedAward.getAID() + ", nomination_date = to_date('" + df.format(changedAward.getNominationDate()) + "', 'MM/DD/YYYY')" +
+                   ", award_date = to_date('" + df.format(changedAward.getAwardDate()) + "', 'MM/DD/YYYY')" +
+                   " WHERE awid = " + changedAward.getAWID();
            DBUtils.executeUpdate(conn, query);
 
            query = "SELECT awid, nomination_date, aid, award_date FROM Awards WHERE awid = " + changedAward.getAWID();

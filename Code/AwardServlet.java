@@ -137,7 +137,7 @@ public class AwardServlet extends HttpServlet {
             out.println("\t\t\t<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"tid\" value=\"" + tid + "\" />");
             out.println("\t\t\t<input type=\"hidden\" name=\"save\" value=\"true\" />");
-            out.println("\t\t\t<input type=\"hidden\" name=\"edit\" value=\"true\" />");
+            out.println("\t\t\t<input type=\"hidden\" name=\"add\" value=\"true\" />");
             out.println("\t\t\t<div>Nomination Date: <input type=\"text\" name=\"nomination_date\" /></div>");
             out.println("\t\t\t<div>Award Date: <input type=\"text\" name=\"award_date\" /></div>");
 
