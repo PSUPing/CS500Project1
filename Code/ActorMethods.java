@@ -345,4 +345,30 @@ public class ActorMethods {
 
         return quotes;
     }
+
+    /**
+     * Get actor awards from the database by the actor ID.
+     * @param aid
+     * @return
+     */
+    public ArrayList getAwardsByActor(int aid) {
+        ArrayList awards = new ArrayList();
+
+        try {
+            String query = "SELECT awid, aid, nomination_date, award_date FROM awards WHERE aid = " + aid;
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            // A loop may not be needed, but it will ensure that actor is null if there is no result
+            while (result.next())
+                awards.add(new Award(result.getInt("awid"), result.getInt("aid"), result.getDate("nomination_date"), result.getDate("award_date")));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+
+        return awards;
+    }
 }

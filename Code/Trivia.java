@@ -21,7 +21,7 @@ public class Trivia {
 
     /********** Getters **********/
 
-    public int getTrivaiID() {
+    public int getTriviaID() {
         return triviaID;
     }
 
@@ -35,7 +35,7 @@ public class Trivia {
 
     /********** Setters **********/
 
-    public void setTrivaiID(int trvid) {
+    public void setTriviaID(int trvid) {
         triviaID = trvid;
     }
 

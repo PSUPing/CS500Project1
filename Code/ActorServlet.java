@@ -304,8 +304,6 @@ public class ActorServlet extends HttpServlet {
     private void renderQuotes(PrintWriter out) {
         ArrayList quotes = actMethods.getQuotesByActor(aid);
 
-//        out.println("<p>" + quotes.size() + "</p>");
-
         if (quotes.size() > 0) {
             out.println("\t\t<h2>Actor Quotes</h2>");
             out.println("\t\t<table>");
@@ -332,6 +330,72 @@ public class ActorServlet extends HttpServlet {
         }
     }
 
+    private void renderAwards(PrintWriter out) {
+        ArrayList awards = actMethods.getAwardsByActor(aid);
+
+        if (awards.size() > 0) {
+            out.println("\t\t<h2>Actor Awards</h2>");
+            out.println("\t\t<table>");
+            out.println("\t\t\t<tr>");
+            out.println("\t\t\t\t<td><b></b></td>");
+            out.println("\t\t\t\t<td><b>Nomination Date</b></td>");
+            out.println("\t\t\t\t<td><b>Award Date</b></td>");
+            out.println("\t\t\t</tr>");
+
+            for (int i = 0; i < awards.size(); i++) {
+                Award award = (Award) awards.get(i);
+
+                out.println("\t\t\t<tr>");
+
+                if (uid.equals(""))
+                    out.println("\t\t\t\t<td><a href=\"QuoteServlet?aid=" + aid + "&awid=" + award.getAWID() + "\">View</a></td>");
+                else
+                    out.println("\t\t\t\t<td><a href=\"QuoteServlet?aid=" + aid + "&uid=" + uid + "&awid=" + award.getAWID() + "\">View</a></td>");
+
+                out.println("\t\t\t\t<td>" + award.getNominationDate() +"</td>");
+
+                if (award.getAwardDate() == null)
+                    out.println("\t\t\t\t<td>Did not win</td>");
+                else
+                    out.println("\t\t\t\t<td>" + award.getAwardDate() +"</td>");
+
+                out.println("\t\t\t</tr>");
+            }
+
+            out.println("\t\t</table>");
+        }
+    }
+//    public Trivia(int trvid, int aid, String trvText) {
+
+/*    private void renderTrivia(PrintWriter out) {
+        ArrayList trivias = actMethods.getQuotesByActor(aid);
+
+        if (trivias.size() > 0) {
+            out.println("\t\t<h2>Actor Quotes</h2>");
+            out.println("\t\t<table>");
+            out.println("\t\t\t<tr>");
+            out.println("\t\t\t\t<td><b></b></td>");
+            out.println("\t\t\t\t<td><b>Quote</b></td>");
+            out.println("\t\t\t</tr>");
+
+            for (int i = 0; i < trivias.size(); i++) {
+                Trivia trivia = (Trivia) trivias.get(i);
+
+                out.println("\t\t\t<tr>");
+
+                if (uid.equals(""))
+                    out.println("\t\t\t\t<td><a href=\"QuoteServlet?aid=" + aid + "&trvid=" + trivia.getQID() + "\">View</a></td>");
+                else
+                    out.println("\t\t\t\t<td><a href=\"QuoteServlet?aid=" + aid + "&uid=" + uid + "&trvid=" + quote.getQID() + "\">View</a></td>");
+
+                out.println("\t\t\t\t<td>" + quote.getQuote() +"</td>");
+                out.println("\t\t\t</tr>");
+            }
+
+            out.println("\t\t</table>");
+        }
+    }
+*/
     private void renderActor(PrintWriter out, Actor displayActor) {
         if (!uid.equals("")) {
             out.println("\t\t<div style=\"text-align:right\"><a href=\"ActorServlet?uid=" + uid + "&aid=" + displayActor.getAID() + "&add=true\">Add</a> " +
@@ -353,6 +417,7 @@ public class ActorServlet extends HttpServlet {
 
         renderActorTitles(out);
         renderQuotes(out);
+        renderAwards(out);
     }
 
     private void resetValues() {
