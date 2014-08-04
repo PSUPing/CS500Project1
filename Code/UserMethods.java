@@ -3,6 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class UserMethods {
 
     private static Connection conn = null;
+    private java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); // Used for outputting the date
 
     public String openDBConnection(String dbUser, String dbPass, String dbSID, String dbHost, int port) {
 
@@ -45,49 +47,54 @@ public class UserMethods {
     }
 
     /**
-     * Create a new actor in the database.
-     * @param newActor
+     * Create a new user in the database.
+     * @param newUser
      * @return
-
-    public Actor addActor(Actor newActor) {
+     */
+    public User addUser(User newUser) {
         try {
-            String query = "INSERT INTO actors (name, dob, bio) VALUES ('" +
-                    newActor.getName() + "', '" + newActor.getDOB() + "', '" + newActor.getBio() + "');";
+            /* TODO: For some reason every variant of grabbing the current date
+             * (Calendar.getInstance() and new Date()) caused errors for some reason
+             * ideally this would be a current date and time
+             */
+            String query = "INSERT INTO users (userid, pwd, dob, date_joined) VALUES ('" +
+                    newUser.getUID() + "', '" + newUser.getPassword() +
+                    "', to_date('04/15/1982', 'MM/DD/YYYY')" +
+                    "', to_date('08/05/2014', 'MM/DD/YYYY')";
             DBUtils.executeUpdate(conn, query);
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace(System.err);
         }
 
-        return newActor;
-    }*/
+        return newUser;
+    }
 
     /**
-     * Update an new actor in the database.
-     * @param changedActor
+     * Update a user in the database.
+     * @param changedUser
      * @return
-
-    public Actor updateActor(Actor changedActor) {
-        Actor actor = null;
+     */
+    public User updateUser(User changedUser) {
+        User user  = null;
 
         try {
-            int cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM actors WHERE name = '" + changedActor.getName() +
-                    "' AND '" + changedActor.getDOB() + "';");
+            int cnt = DBUtils.getIntFromDB(conn, "SELECT COUNT(*) FROM users WHERE userid = '" + changedUser.getUID());
 
             if (cnt == 0)
-                return actor;
+                return user;
 
-            String query = "UPDATE actors SET bio = '" + changedActor.getBio() + "' WHERE name = '" + changedActor.getName() +
-                    "' AND '" + changedActor.getDOB() + "';";
+            String query = "UPDATE users SET pwd = '" + changedUser.getPassword() +
+                    "', to_date('" + df.format(changedUser.getDOB()) + "', 'MM/DD/YYYY')" +
+                    " WHERE userid = '" + changedUser.getUID();
             DBUtils.executeUpdate(conn, query);
 
-            query = "SELECT name, dob, bio FROM actors WHERE name = '" + changedActor.getName() +
-                    "' AND '" + changedActor.getDOB() + "';";
+            query = "SELECT userid, pwd, dob, date_joined FROM users WHERE userid = '" + changedUser.getUID();
 
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             result.next();
-            actor = new Actor(changedActor.getAID(), changedActor.getName(), changedActor.getDOB(), result.getString("bio"));
+            user = new User(changedUser.getUID(), result.getString("pwd"), result.getDate("dob"), changedUser.getDateJoined());
 
             result.close();
             stmt.close();
@@ -95,11 +102,11 @@ public class UserMethods {
             sqlEx.printStackTrace(System.err);
         }
 
-        return actor;
-    }*/
+        return user;
+    }
 
     /**
-     * Get an new actor from the database by the primary key.
+     * Get a user from the database by the primary key and password.
      * @param name
      * @param dob
      * @return
@@ -109,6 +116,31 @@ public class UserMethods {
 
         try {
             String query = "SELECT userID, pwd, dob, date_joined FROM users WHERE userID = '" + uid + "' AND pwd = '" + pwd + "'";
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            result.next();
+            user = new User(result.getString("userID"));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+
+        return user;
+    }
+
+    /**
+     * Get a user from the database by the primary key.
+     * @param name
+     * @return
+     */
+    public User getUser(String uid) {
+        User user = null;
+
+        try {
+            String query = "SELECT userID, pwd, dob, date_joined FROM users WHERE userID = '" + uid + "'";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
