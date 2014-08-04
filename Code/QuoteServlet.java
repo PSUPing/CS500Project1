@@ -106,21 +106,6 @@ public class QuoteServlet extends HttpServlet {
                     quote = quoteMethods.addQuote(quote);
 
                 renderQuote(out, quote);
-                
-                User user = new User(uid, pwd, dob, joined);
-
-                if (addMode) {
-                    user = userMethods.addUser(user);
-                    out.println("<p>" + user.getPassword() + "</p>");
-                    out.println("<div>" + uid + " successfully added</div>");
-                }
-                else if (editMode) {
-                    user = userMethods.updateUser(user);
-                    out.println("<div>" + uid + " successfully updated</div>");
-                }
-
-                out.println("<div><a href=\"ActorServlet?uid=" + uid + "\">Back to main page</a></div>");
-            
             }
             else if (addMode) {
                 renderQuoteTextBoxes(out, null);
