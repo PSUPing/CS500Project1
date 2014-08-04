@@ -100,13 +100,20 @@ public class ActorServlet extends HttpServlet {
                     Rating rating = new Rating(aid, tid, uid, uRating);
 
                     if (actMethods.hasActorTitleRating(rating)) {
-                        if (uRating == 0)
+                        out.println("<p>Got here</p>");
+                        if (uRating == 0) {
+                            out.println("<p>Rating 0</p>");
                             actMethods.removeActorTitleRating(rating);
-                        else
+                        }
+                        else {
+                            out.println("<p>Rating != 0</p>");
                             actMethods.updateRating(rating);
+                        }
                     }
-                    else
+                    else {
+                        out.println("<p>No Rating</p>");
                         actMethods.addActorTitleRating(rating);
+                    }
 
                     Actor actor = actMethods.getActor(aid);
                     renderActor(out, actor);
@@ -243,10 +250,8 @@ public class ActorServlet extends HttpServlet {
             out.println("\t\t\t\t<td><b>Genre</b></td>");
             out.println("\t\t\t\t<td><b>Actor's Role</b></td>");
 
-            if (!uid.equals("")) {
+            if (!uid.equals(""))
                 out.println("\t\t\t\t<td><b>" + uid + "'s Rating</b></td>");
-                out.println("\t\t\t\t<td></td>");
-            }
 
             out.println("\t\t\t</tr>");
 
@@ -262,7 +267,7 @@ public class ActorServlet extends HttpServlet {
                     out.println("\t\t\t\t<td>" + title.getSynopsis() + "</td>");
                     out.println("\t\t\t\t<td>" + title.getGenre() + "</td>");
                     out.println("\t\t\t\t<td>" + title.getRole() + "</td>");
-                    out.print("\t\t\t\t<td><select name=\"urating\">");
+                    out.print("\t\t\t\t<td><form><select name=\"urating\">");
 
                     for (int j = 1; j <= 5; j++) {
                         if (title.getUserRating() == j) {
@@ -278,12 +283,12 @@ public class ActorServlet extends HttpServlet {
                     else
                         out.print("<option>" + 0 + "</option>");
 
-                    out.print("</select>\n");
-                    out.print("\t\t\t\t<td><input type=\"submit\" value=\"Save Rating\" />");
+                    out.print("</select>");
                     out.print("<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
                     out.print("<input type=\"hidden\" name=\"tid\" value=\"" + title.getTID() + "\" />");
                     out.print("<input type=\"hidden\" name=\"aid\" value=\"" + aid + "\" />");
                     out.print("<input type=\"hidden\" name=\"save\" value=\"true\" />");
+                    out.print("<input type=\"submit\" value=\"Save Rating\" /></form></td>");
                     out.print("\t\t\t</tr>\n");
                     out.println("\t\t</table><br />");
                     out.println("\t\t<div><a href=\"TitleServlet?uid=" + uid + "&aid=" + aid + "&tid=" + title.getTID() + "&add=true\">Add New Movie</a>");

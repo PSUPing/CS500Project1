@@ -59,8 +59,8 @@ public class UserMethods {
              */
             String query = "INSERT INTO users (userid, pwd, dob, date_joined) VALUES ('" +
                     newUser.getUID() + "', '" + newUser.getPassword() +
-                    "', to_date('04/15/1982', 'MM/DD/YYYY')" +
-                    "', to_date('08/05/2014', 'MM/DD/YYYY')";
+                    "', to_date('" + newUser.getDOB() + "', 'MM/DD/YYYY')" +
+                    "', to_date('" + newUser.getDateJoined() + "', 'MM/DD/YYYY')";
             DBUtils.executeUpdate(conn, query);
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace(System.err);
@@ -84,7 +84,7 @@ public class UserMethods {
                 return user;
 
             String query = "UPDATE users SET pwd = '" + changedUser.getPassword() +
-                    "', to_date('" + df.format(changedUser.getDOB()) + "', 'MM/DD/YYYY')" +
+                    "', to_date('" + changedUser.getDOB() + "', 'MM/DD/YYYY')" +
                     " WHERE userid = '" + changedUser.getUID();
             DBUtils.executeUpdate(conn, query);
 
@@ -145,7 +145,7 @@ public class UserMethods {
             ResultSet result = stmt.executeQuery(query);
 
             result.next();
-            user = new User(result.getString("userID"));
+            user = new User(result.getString("userID"), result.getString("pwd"), result.getDate("dob"), result.getDate("date_joined"));
 
             result.close();
             stmt.close();

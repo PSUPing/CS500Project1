@@ -134,9 +134,10 @@ public class LoginServlet extends HttpServlet {
             out.println("\t\t\t<input type=\"hidden\" name=\"joined\" value=\"" + userToUpdate.getDateJoined() + "\" />");
             out.println("\t\t\t<div>User Name: <input type=\"text\" name=\"uid\" disabled=\"true\" value=\"" + userToUpdate.getUID() + "\" /></div>");
             out.println("\t\t\t<div>Password: <input type=\"password\" name=\"password\" value=\"" + userToUpdate.getPassword() + "\" /></div>");
-            out.println("\t\t\t<div>DOB (YYYY-MM-DD): <input type=\"text\" name=\"dob\" value=\"" + userToUpdate.getDOB() + "\" /></div>");
-            out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"LoginServlet\">Cancel</a>");
+            out.println("\t\t\t<div>DOB: <input type=\"text\" name=\"dob\" value=\"" + userToUpdate.getDOB() + "\" /></div>");
+            out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"LoginServlet?uid=" + userToUpdate.getUID() + "\">Cancel</a>");
             out.println("\t\t</form>");
+            out.println("\t\t<a href=\"ActorServlet?uid=" + userToUpdate.getUID() + "\">Back to Actor Page</a>");
         }
         else {
             out.println("\t\t<form action=\"LoginServlet\" method=\"get\">");
@@ -144,9 +145,10 @@ public class LoginServlet extends HttpServlet {
             out.println("\t\t\t<input type=\"hidden\" name=\"add\" value=\"true\" />");
             out.println("\t\t\t<div>User Name: <input type=\"text\" name=\"uid\" /></div>");
             out.println("\t\t\t<div>Password: <input type=\"password\" name=\"password\" /></div>");
-            out.println("\t\t\t<div>DOB (YYYY-MM-DD): <input type=\"text\" name=\"dob\" /></div>");
+            out.println("\t\t\t<div>DOB: <input type=\"text\" name=\"dob\" /></div>");
             out.println("\t\t\t<input type=\"submit\" value=\"Save\"> <a href=\"LoginServlet\">Cancel</a>");
             out.println("\t\t</form>");
+            out.println("\t\t<a href=\"ActorServlet\">Back to Actor Page</a>");
         }
     }
 
