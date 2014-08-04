@@ -102,10 +102,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ActorServlet.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ActorServlet.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ActorServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="453" column="24" selection-start="20118" selection-end="20118" vertical-scroll-proportion="0.0" vertical-offset="6066" max-vertical-offset="7110">
+            <state line="183" column="0" selection-start="8206" selection-end="8206" vertical-scroll-proportion="0.6020279" vertical-offset="2150" max-vertical-offset="7110">
               <folding />
             </state>
           </provider>
@@ -129,19 +129,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QuoteServlet.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="QuoteServlet.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QuoteServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="131" column="48" selection-start="5008" selection-end="5008" vertical-scroll-proportion="1.9912719" vertical-offset="233" max-vertical-offset="2910">
+            <state line="131" column="48" selection-start="5008" selection-end="5008" vertical-scroll-proportion="0.0" vertical-offset="98" max-vertical-offset="2910">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReviewServlet.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReviewServlet.java">
+      <file leaf-file-name="LoginServlet.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LoginServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="166" column="0" selection-start="8027" selection-end="8027" vertical-scroll-proportion="0.0" vertical-offset="2490" max-vertical-offset="2970">
+            <state line="146" column="85" selection-start="6749" selection-end="6752" vertical-scroll-proportion="-9.923077" vertical-offset="1812" max-vertical-offset="2700">
               <folding />
             </state>
           </provider>
@@ -179,16 +179,16 @@
         <option value="$PROJECT_DIR$/User.java" />
         <option value="$PROJECT_DIR$/HTMLUtils.java" />
         <option value="$PROJECT_DIR$/UserMethods.java" />
-        <option value="$PROJECT_DIR$/LoginServlet.java" />
         <option value="$PROJECT_DIR$/TitleMethods.java" />
         <option value="$PROJECT_DIR$/ReviewMethods.java" />
         <option value="$PROJECT_DIR$/ReviewServlet.java" />
         <option value="$PROJECT_DIR$/TitleServlet.java" />
         <option value="$PROJECT_DIR$/Trivia.java" />
         <option value="$PROJECT_DIR$/News.java" />
-        <option value="$PROJECT_DIR$/ActorServlet.java" />
         <option value="$PROJECT_DIR$/ActorMethods.java" />
         <option value="$PROJECT_DIR$/QuoteServlet.java" />
+        <option value="$PROJECT_DIR$/LoginServlet.java" />
+        <option value="$PROJECT_DIR$/ActorServlet.java" />
       </list>
     </option>
   </component>
@@ -648,11 +648,6 @@
         <state line="26" column="0" selection-start="1019" selection-end="1019" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LoginServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="100" selection-start="6247" selection-end="6247" vertical-scroll-proportion="0.0" vertical-offset="1583" max-vertical-offset="2745" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Actor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="0" selection-start="424" selection-end="496" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1080" />
@@ -733,13 +728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ActorServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="453" column="24" selection-start="20118" selection-end="20118" vertical-scroll-proportion="0.0" vertical-offset="6066" max-vertical-offset="7110">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ActorMethods.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="226" column="112" selection-start="7549" selection-end="7549" vertical-scroll-proportion="0.0" vertical-offset="2960" max-vertical-offset="6390">
@@ -763,7 +751,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/QuoteServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="48" selection-start="5008" selection-end="5008" vertical-scroll-proportion="1.9912719" vertical-offset="233" max-vertical-offset="2910">
+        <state line="131" column="48" selection-start="5008" selection-end="5008" vertical-scroll-proportion="0.0" vertical-offset="98" max-vertical-offset="2910">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LoginServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="146" column="85" selection-start="6749" selection-end="6752" vertical-scroll-proportion="-9.923077" vertical-offset="1812" max-vertical-offset="2700">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ActorServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="183" column="0" selection-start="8206" selection-end="8206" vertical-scroll-proportion="0.6020279" vertical-offset="2150" max-vertical-offset="7110">
           <folding />
         </state>
       </provider>
