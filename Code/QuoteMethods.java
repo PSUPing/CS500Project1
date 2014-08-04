@@ -58,7 +58,7 @@ public class QuoteMethods {
            int sid = 1 + DBUtils.getIntFromDB(conn, "SELECT MAX(qid) FROM quotes");
 
            String query = "INSERT INTO quotes VALUES (" + sid + ", '" + newQuote.getQuote() + "', " +
-                   newQuote.getAID() + "')";
+                   newQuote.getAID() + ")";
            DBUtils.executeUpdate(conn, query);
        } catch (SQLException sqlEx) {
            sqlEx.printStackTrace(System.err);
@@ -82,7 +82,7 @@ public class QuoteMethods {
                return quote;
 
            String query = "UPDATE quotes SET qt = '" + changedQuote.getQuote() + "',  aid = " +
-        		   changedQuote.getAID() + "' WHERE qid = " + changedQuote.getQID();
+        		   changedQuote.getAID() + " WHERE qid = " + changedQuote.getQID();
            DBUtils.executeUpdate(conn, query);
 
            query = "SELECT qid, qt, aid FROM quotes WHERE qid = " + changedQuote.getQID();

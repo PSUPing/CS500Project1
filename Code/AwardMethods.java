@@ -58,7 +58,8 @@ public class AwardMethods {
            int sid = 1 + DBUtils.getIntFromDB(conn, "SELECT MAX(awid) FROM awards");
 
            String query = "INSERT INTO awards (awid, aid, nomination_date, award_date) VALUES (" + sid + ", " + newAward.getAID() +
-                   ", " + newAward.getNominationDate() + ", '" + newAward.getAwardDate() + "')";
+                   ", to_date('" + df.format(newAward.getNominationDate()) + "', 'MM/DD/YYYY')" +
+                   ", to_date('" + df.format(newAward.getAwardDate()) + "', 'MM/DD/YYYY'))";
            DBUtils.executeUpdate(conn, query);
        } catch (SQLException sqlEx) {
            sqlEx.printStackTrace(System.err);

@@ -58,7 +58,7 @@ public class TriviaMethods {
            int sid = 1 + DBUtils.getIntFromDB(conn, "SELECT MAX(nid) FROM trivia");
 
            String query = "INSERT INTO trivia (trvid, aid, trivia_text) VALUES (" + sid + ", " + newTrivia.getAID() +
-                   ", " + newTrivia.getTrivia() + "')";
+                   ", '" + newTrivia.getTrivia() + "')";
            DBUtils.executeUpdate(conn, query);
        } catch (SQLException sqlEx) {
            sqlEx.printStackTrace(System.err);
@@ -79,7 +79,7 @@ public class TriviaMethods {
            if (cnt == 0)
                return changedTrivia;
 
-           String query = "UPDATE Trivia SET aid = " + changedTrivia.getAID() + ", trivia_text = " + changedTrivia.getTrivia() +
+           String query = "UPDATE Trivia SET aid = " + changedTrivia.getAID() + ", trivia_text = '" + changedTrivia.getTrivia() +
                    "' WHERE trvid = " + changedTrivia.getTriviaID();
            DBUtils.executeUpdate(conn, query);
 

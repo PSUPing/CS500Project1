@@ -58,7 +58,7 @@ public class NewsMethods {
            int sid = 1 + DBUtils.getIntFromDB(conn, "SELECT MAX(nid) FROM news");
 
            String query = "INSERT INTO news (nid, aid, news_source, news_url) VALUES (" + sid + ", " + newNews.getAID() +
-                   ", " + newNews.getNewsSource() + ", '" + newNews.getNewsURL() + "')";
+                   ", '" + newNews.getNewsSource() + "', '" + newNews.getNewsURL() + "')";
            DBUtils.executeUpdate(conn, query);
        } catch (SQLException sqlEx) {
            sqlEx.printStackTrace(System.err);
@@ -79,8 +79,8 @@ public class NewsMethods {
            if (cnt == 0)
                return changedNews;
 
-           String query = "UPDATE News SET aid = " + changedNews.getAID() + ", news_source = " + changedNews.getNewsSource() +
-                   ", news_url = '" + changedNews.getNewsURL() +
+           String query = "UPDATE News SET aid = " + changedNews.getAID() + ", news_source = '" + changedNews.getNewsSource() +
+                   "', news_url = '" + changedNews.getNewsURL() +
                    "' WHERE nid = " + changedNews.getNID();
            DBUtils.executeUpdate(conn, query);
 
