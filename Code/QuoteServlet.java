@@ -129,7 +129,7 @@ public class QuoteServlet extends HttpServlet {
 
    private void renderQuoteTextBoxes(PrintWriter out, Quote quoteToUpdate) {
        if (quoteToUpdate != null) {
-           out.println("\t\t<form action=\"ReviewServlet\" method=\"get\">");
+           out.println("\t\t<form action=\"QuoteServlet\" method=\"get\">");
            out.println("\t\t\t<input type=\"hidden\" name=\"revid\" value=\"" + quoteToUpdate.getQID() + "\" />");
            out.println("\t\t\t<input type=\"hidden\" name=\"aid\" value=\"" + aid + "\" />");
            out.println("\t\t\t<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
@@ -142,7 +142,7 @@ public class QuoteServlet extends HttpServlet {
            out.println("\t\t</form>");
        }
        else {
-           out.println("\t\t<form action=\"ReviewServlet\" method=\"get\">");
+           out.println("\t\t<form action=\"QuoteServlet\" method=\"get\">");
            out.println("\t\t\t<input type=\"hidden\" name=\"aid\" value=\"" + aid + "\" />");
            out.println("\t\t\t<input type=\"hidden\" name=\"uid\" value=\"" + uid + "\" />");
            out.println("\t\t\t<input type=\"hidden\" name=\"tid\" value=\"" + tid + "\" />");

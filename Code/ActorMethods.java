@@ -224,7 +224,7 @@ public class ActorMethods {
         ArrayList actors = new ArrayList();
 
         try {
-            String query = "SELECT aid, name, dob, bio FROM actors WHERE name LIKE '" + name + "%'";
+            String query = "SELECT aid, name, dob, bio FROM actors WHERE UPPER(name) LIKE UPPER('" + name + "%')";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
@@ -370,5 +370,58 @@ public class ActorMethods {
         }
 
         return awards;
+    }
+
+    /**
+     * Get actor awards from the database by the actor ID.
+     * @param aid
+     * @return
+     */
+    public ArrayList getTriviaByActor(int aid) {
+        ArrayList trivias = new ArrayList();
+
+        try {
+            String query = "SELECT trvid, aid, trivia_text FROM trivia WHERE aid = " + aid;
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            // A loop may not be needed, but it will ensure that actor is null if there is no result
+            while (result.next())
+                trivias.add(new Trivia(result.getInt("trvid"), result.getInt("aid"), result.getString("trivia_text")));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+
+        return trivias;
+    }
+    //getNewsByActor
+
+    /**
+     * Get actor news from the database by the actor ID.
+     * @param aid
+     * @return
+     */
+    public ArrayList getNewsByActor(int aid) {
+        ArrayList newses = new ArrayList();
+
+        try {
+            String query = "SELECT nid, aid, news_source, news_url FROM news WHERE aid = " + aid;
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+
+            // A loop may not be needed, but it will ensure that actor is null if there is no result
+            while (result.next())
+                newses.add(new News(result.getInt("nid"), result.getInt("aid"), result.getString("news_source"), result.getString("news_url")));
+
+            result.close();
+            stmt.close();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace(System.err);
+        }
+
+        return newses;
     }
 }

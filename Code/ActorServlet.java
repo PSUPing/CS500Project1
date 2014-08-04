@@ -145,9 +145,12 @@ public class ActorServlet extends HttpServlet {
 
                             renderActorTable(out, actors);
                         }
-                        else {
+                        else if (actors.size() == 1) {
                             Actor actor = (Actor) actors.get(0);
                             renderActor(out, actor);
+                        }
+                        else {
+                            out.println("<h2>No actors found with that name</h2>");
                         }
                     }
                 }
@@ -305,7 +308,7 @@ public class ActorServlet extends HttpServlet {
         ArrayList quotes = actMethods.getQuotesByActor(aid);
 
         if (quotes.size() > 0) {
-            out.println("\t\t<h2>Actor Quotes</h2>");
+            out.println("\t\t<h2>Quotes</h2>");
             out.println("\t\t<table>");
             out.println("\t\t\t<tr>");
             out.println("\t\t\t\t<td><b></b></td>");
@@ -334,7 +337,7 @@ public class ActorServlet extends HttpServlet {
         ArrayList awards = actMethods.getAwardsByActor(aid);
 
         if (awards.size() > 0) {
-            out.println("\t\t<h2>Actor Awards</h2>");
+            out.println("\t\t<h2>Awards</h2>");
             out.println("\t\t<table>");
             out.println("\t\t\t<tr>");
             out.println("\t\t\t\t<td><b></b></td>");
@@ -348,9 +351,9 @@ public class ActorServlet extends HttpServlet {
                 out.println("\t\t\t<tr>");
 
                 if (uid.equals(""))
-                    out.println("\t\t\t\t<td><a href=\"QuoteServlet?aid=" + aid + "&awid=" + award.getAWID() + "\">View</a></td>");
+                    out.println("\t\t\t\t<td><a href=\"AwardServlet?aid=" + aid + "&awid=" + award.getAWID() + "\">View</a></td>");
                 else
-                    out.println("\t\t\t\t<td><a href=\"QuoteServlet?aid=" + aid + "&uid=" + uid + "&awid=" + award.getAWID() + "\">View</a></td>");
+                    out.println("\t\t\t\t<td><a href=\"AwardServlet?aid=" + aid + "&uid=" + uid + "&awid=" + award.getAWID() + "\">View</a></td>");
 
                 out.println("\t\t\t\t<td>" + award.getNominationDate() +"</td>");
 
@@ -365,13 +368,12 @@ public class ActorServlet extends HttpServlet {
             out.println("\t\t</table>");
         }
     }
-//    public Trivia(int trvid, int aid, String trvText) {
 
-/*    private void renderTrivia(PrintWriter out) {
-        ArrayList trivias = actMethods.getQuotesByActor(aid);
+    private void renderTrivia(PrintWriter out) {
+        ArrayList trivias = actMethods.getTriviaByActor(aid);
 
         if (trivias.size() > 0) {
-            out.println("\t\t<h2>Actor Quotes</h2>");
+            out.println("\t\t<h2>Trivia</h2>");
             out.println("\t\t<table>");
             out.println("\t\t\t<tr>");
             out.println("\t\t\t\t<td><b></b></td>");
@@ -384,18 +386,49 @@ public class ActorServlet extends HttpServlet {
                 out.println("\t\t\t<tr>");
 
                 if (uid.equals(""))
-                    out.println("\t\t\t\t<td><a href=\"QuoteServlet?aid=" + aid + "&trvid=" + trivia.getQID() + "\">View</a></td>");
+                    out.println("\t\t\t\t<td><a href=\"TriviaServlet?aid=" + aid + "&trvid=" + trivia.getTriviaID() + "\">View</a></td>");
                 else
-                    out.println("\t\t\t\t<td><a href=\"QuoteServlet?aid=" + aid + "&uid=" + uid + "&trvid=" + quote.getQID() + "\">View</a></td>");
+                    out.println("\t\t\t\t<td><a href=\"TriviaServlet?aid=" + aid + "&uid=" + uid + "&trvid=" + trivia.getTriviaID() + "\">View</a></td>");
 
-                out.println("\t\t\t\t<td>" + quote.getQuote() +"</td>");
+                out.println("\t\t\t\t<td>" + trivia.getTrivia() +"</td>");
                 out.println("\t\t\t</tr>");
             }
 
             out.println("\t\t</table>");
         }
     }
-*/
+
+    private void renderNews(PrintWriter out) {
+        ArrayList newses = actMethods.getNewsByActor(aid);
+
+        if (newses.size() > 0) {
+            out.println("\t\t<h2>News</h2>");
+            out.println("\t\t<table>");
+            out.println("\t\t\t<tr>");
+            out.println("\t\t\t\t<td><b></b></td>");
+            out.println("\t\t\t\t<td><b>News</b></td>");
+            out.println("\t\t\t\t<td><b>News URL</b></td>");
+            out.println("\t\t\t</tr>");
+
+            for (int i = 0; i < newses.size(); i++) {
+                News news = (News) newses.get(i);
+
+                out.println("\t\t\t<tr>");
+
+                if (uid.equals(""))
+                    out.println("\t\t\t\t<td><a href=\"NewsServlet?aid=" + aid + "&nid=" + news.getNID() + "\">View</a></td>");
+                else
+                    out.println("\t\t\t\t<td><a href=\"NewsServlet?aid=" + aid + "&uid=" + uid + "&nid=" + news.getNID() + "\">View</a></td>");
+
+                out.println("\t\t\t\t<td>" + news.getNewsSource() +"</td>");
+                out.println("\t\t\t\t<td><a href=\"" + news.getNewsURL() + "\">" + news.getNewsURL() + "</a></td>");
+                out.println("\t\t\t</tr>");
+            }
+
+            out.println("\t\t</table>");
+        }
+    }
+
     private void renderActor(PrintWriter out, Actor displayActor) {
         if (!uid.equals("")) {
             out.println("\t\t<div style=\"text-align:right\"><a href=\"ActorServlet?uid=" + uid + "&aid=" + displayActor.getAID() + "&add=true\">Add</a> " +
@@ -418,6 +451,8 @@ public class ActorServlet extends HttpServlet {
         renderActorTitles(out);
         renderQuotes(out);
         renderAwards(out);
+        renderTrivia(out);
+        renderNews(out);
     }
 
     private void resetValues() {
